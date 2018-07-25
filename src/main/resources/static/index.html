@@ -1,0 +1,54 @@
+<html>
+<head>
+<script>
+	function doAddition() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("result").value = this.responseText;
+			}
+		};
+		var num1 = document.getElementById("num1").value;
+		var num2 = document.getElementById("num2").value;
+		xhttp.open("GET", "/addition?num1="+num1+"&num2="+num2, true);
+		xhttp.send();
+	}
+	function domultiplication() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("result").value = this.responseText;
+			}
+		};
+		var num1 = document.getElementById("num1").value;
+		var num2 = document.getElementById("num2").value;
+		xhttp.open("GET", "/multiplication?num1="+num1+"&num2="+num2, true);
+		xhttp.send();
+	}
+	function dosubtraction() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("result").value = this.responseText;
+			}
+		};
+		var num1 = document.getElementById("num1").value;
+		var num2 = document.getElementById("num2").value;
+		xhttp.open("GET", "/subtraction?num1="+num1+"&num2="+num2, true);
+		xhttp.send();
+	}
+</script>
+</head>
+<body>
+	<h1>Calculator</h1>
+	<input type="text" id="num1"></input>
+	<input type="text" id="num2"></input>
+	<button type="button" onclick="doAddition()">Addition</button>
+	<button type="button" onclick="dosubtraction()">Subtraction</button>
+	<button type="button" onclick="domultiplication()">multiplication</button>
+	
+	<br>
+	<input type="text" id="result"></input>
+</body>
+</html>
+
