@@ -16,62 +16,62 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.scorecard.models.Country;
+import com.scorecard.models.Player;
 
 @Repository
-public class CountryRepository implements RowMapper<Country> {
+public class PlayerRepository implements RowMapper<Player> {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public Country save(Country country) {
-		String sql = "INSERT INTO country (code, name) values (?, ?)";
+	public Player save(Player player) {
+		String sql = "INSERT INTO player (age, name) values (?, ?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
-				ps.setString(1, country.getCode());
-				ps.setString(2, country.getName());
+				ps.setInt(1, player.getAge());
+				ps.setString(2, player.getName());
 				return ps;
 			}
 		}, holder);
-		country.setId((Integer) holder.getKeys().get("id"));
-		return country;
+		player.setId((Integer) holder.getKeys().get("id"));
+		return player;
 	}
 
-	public void update(Country country) {
-		String sql = "Update country set code = '" + country.getCode() + "', name = '" + country.getName() + "' where id = "
-				+ country.getId();
+	public void update(Player player) {
+		String sql = "Update player set age = '" + player.getAge() + "', name = '" + player.getName() + "' where id = "
+				+ player.getId();
 		System.out.println("executing SQL = " + sql);
 		jdbcTemplate.update(sql);
 	}
 
 	public void delete(Integer id) {
-		String sql = "delete from country  where id = " + id;
+		String sql = "delete from player where id = " + id;
 		System.out.println("executing SQL = " + sql);
 		jdbcTemplate.update(sql);
 	}
 
-	public Country findOne(Integer id) {
-		String sql = "select * from country  where id = ?";
+	public Player findOne(Integer id) {
+		String sql = "select * from player where id = ?";
 		System.out.println("executing SQL = " + sql);
-		Country country = jdbcTemplate.queryForObject(sql, new Object[] { id }, this);
-		return country;
+		Player player = jdbcTemplate.queryForObject(sql, new Object[] { id }, this);
+		return player;
 	}
 
-	public List<Country> findAll() {
-		String sql = "select * from country";
-		List<Country> customers = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Country>(Country.class));
-		return customers;
+	public List<Player> findAll() {
+		String sql = "select * from player";
+		List<Player> players = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Player>(Player.class));
+		return players;
 	}
 
 	@Override
-	public Country mapRow(ResultSet rs, int rowId) throws SQLException {
-		Country country = new Country();
-		country.setCode(rs.getString("code"));
-		country.setId(rs.getInt("id"));
-		country.setName(rs.getString("name"));
-		return country;
+	public Player mapRow(ResultSet rs, int rowId) throws SQLException {
+		Player player = new Player();
+		player.setAge(rs.getInt("age"));
+		player.setId(rs.getInt("id"));
+		player.setName(rs.getString("name"));
+		return player;
 	}
 }

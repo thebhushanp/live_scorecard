@@ -11,42 +11,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scorecard.models.Country;
-import com.scorecard.services.CountryService;
+import com.scorecard.models.Player;
+import com.scorecard.services.PlayerService;
 
 @RestController
-public class CountryController {
+public class PlayerController {
 
 	@Autowired
-	CountryService countryService;
+	PlayerService playerService;
 
-	@GetMapping("/country/{id}")
-	public Country findCountry(@PathVariable("id") Integer id) {
-		return countryService.findOne(id);
+	@GetMapping("/player/{id}")
+	public Player findPlayer(@PathVariable("id") Integer id) {
+		return playerService.findOne(id);
 	}
 
-	@GetMapping("/countries")
-	public List<Country> findAll() {
-		return countryService.findAll();
+	@GetMapping("/players")
+	public List<Player> findAll() {
+		return playerService.findAll();
 	}
 
 	//to create
-	@PostMapping("/country")
-	public Country add(@RequestBody Country country) {
-		countryService.save(country);
-		return country;
+	@PostMapping("/player")
+	public Player add(@RequestBody Player player) {
+		playerService.save(player);
+		return player;
 	}
 
 	//to update
-	@PutMapping("/country")
-	public void update(@RequestBody Country country) {
-		countryService.update(country);
+	@PutMapping("/player")
+	public void update(@RequestBody Player player) {
+		playerService.update(player);
 	}
 
 	//to delete
-	@DeleteMapping("/country/{id}")
+	@DeleteMapping("/player/{id}")
 	public void delete(@PathVariable("id") Integer id) {
-		countryService.delete(id);
+		playerService.delete(id);
 	}
 
 }
