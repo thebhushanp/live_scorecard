@@ -17,3 +17,13 @@ create table team(id SERIAL primary key ,
 
 create table teamtypemapping(teamid integer REFERENCES team(id),
 	playerid integer REFERENCES player(id));
+
+create table teamtype(id SERIAL primary key ,
+	name varchar(30) not null);	
+	
+create table match(id SERIAL primary key,
+	matchtype integer REFERENCES matchtype(id),
+	vengue varchar(30) not null,
+	starttime date not null,
+	tosswinner integer REFERENCES team(id),
+	batfirst integer REFERENCES team(id));

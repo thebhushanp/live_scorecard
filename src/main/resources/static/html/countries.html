@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+table {
+	border-collapse: collapse;
+}
+
+body {
+	margin: 0;
+}
+
+.topnav {
+	overflow: hidden;
+	background-color: #125D8F;
+}
+
+.topnav a {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.topnav a:hover {
+	background-color: #082B47;
+	color: white;
+}
+
+.topnav a.active {
+	background-color: #0C4F7F;
+	color: white;
+}
+
+.topnav-right {
+	float: right;
+}
+
+h1 {
+	text-align: right;
+}
+
+table {
+	margin-top: 15%;
+	width: 30%;
+	height: 30%;
+	background-color: #A9A9A9;
+	text-align: center;
+	border-radius: 10px;
+}
+</style>
+
+<script>
+	window.onload = function() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/countries";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var countryData = JSON.parse(this.responseText);
+				renderCountries(countryData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+
+	function renderCountries(countryData) {
+		var tblCountry = document.getElementById("tblCountry");
+		// iterating the countries
+		for (var index = 0; index < countryData.length; index++) {
+			var countryId = countryData[index].id;
+
+			var tr = document.createElement("tr");
+
+			var tdCode = document.createElement("td");
+			var tdName = document.createElement("td");
+			var tdAction = document.createElement("td");
+
+			var txtCode = document.createTextNode(countryData[index].code);
+			var txtName = document.createTextNode(countryData[index].name);
+
+			var linkView = document.createElement("a");
+			linkView.setAttribute('href', "/html/countryview.html?id="
+					+ countryId);
+			linkView.innerHTML = "View";
+
+			var linkEdit = document.createElement("a");
+			linkEdit.setAttribute('href', "/html/countryupdate.html?id="
+					+ countryId);
+			linkEdit.innerHTML = "Edit";
+
+			var btnDelete = document.createElement("button");
+			btnDelete.setAttribute('pk', countryId);
+			btnDelete.addEventListener("click", deleteCountry, false)
+			var btnDelText = document.createTextNode("Delete");
+			btnDelete.appendChild(btnDelText);
+
+			tdAction.appendChild(linkView);
+			tdAction.appendChild(linkEdit);
+			tdAction.appendChild(btnDelete);
+			tdCode.appendChild(txtCode);
+			tdName.appendChild(txtName);
+			tr.appendChild(tdCode);
+			tr.appendChild(tdName);
+			tr.appendChild(tdAction);
+			tblCountry.appendChild(tr);
+			//alert(countryData[index].name);
+		}
+	}
+
+	function deleteCountry(evt) {
+		var targetComp = evt.target;
+		var pk = targetComp.getAttribute('pk');
+
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/country/" + pk;
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				alert('country deleted');
+				var td = targetComp.parentElement;
+				var tr = td.parentElement;
+				var table = tr.parentElement;
+				table.removeChild(tr);
+			}
+		};
+		xmlhttp.open("DELETE", url, true);
+		xmlhttp.send();
+	}
+	
+</script>
+</head>
+
+<body>
+	<div class="topnav">
+		<div class="topnav-right">
+			<a href="../index.html">Home</a>
+		</div>
+	</div>
+	<a href="countrycreate.html">Add Country</a>
+	<table id="tblCountry">
+		<tr>
+			<th>Code</th>
+			<th>Name</th>
+			<th>Action</th>
+		</tr>
+	</table>
+</body>
+
+</html>

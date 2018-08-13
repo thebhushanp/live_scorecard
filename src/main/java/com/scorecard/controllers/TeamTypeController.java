@@ -20,31 +20,31 @@ public class TeamTypeController {
 	@Autowired
 	TeamTypeService teamtypeService;
 
-	@GetMapping("/teamtype/{id}")
+	@GetMapping("/api/teamtype/{id}")
 	public TeamType findTeamType(@PathVariable("id") Integer id) {
 		return teamtypeService.findOne(id);
 	}
 
-	@GetMapping("/teamtypes")
+	@GetMapping("/api/teamtypes")
 	public List<TeamType> findAll() {
 		return teamtypeService.findAll();
 	}
 
 	//to create
-	@PostMapping("/teamtype")
+	@PostMapping("/api/teamtype")
 	public TeamType add(@RequestBody TeamType teamtype) {
 		teamtypeService.save(teamtype);
 		return teamtype;
 	}
 
 	//to update
-	@PutMapping("/teamtype")
+	@PutMapping("/api/teamtype")
 	public void update(@RequestBody TeamType teamtype) {
 		teamtypeService.update(teamtype);
 	}
 
 	//to delete
-	@DeleteMapping("/teamtype/{id}")
+	@DeleteMapping("/api/teamtype/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		teamtypeService.delete(id);
 	}

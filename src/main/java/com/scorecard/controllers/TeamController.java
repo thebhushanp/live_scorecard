@@ -20,31 +20,31 @@ public class TeamController {
 	@Autowired
 	TeamService teamService;
 
-	@GetMapping("/team/{id}")
+	@GetMapping("/api/team/{id}")
 	public Team findTeam(@PathVariable("id") Integer id) {
 		return teamService.findOne(id);
 	}
 
-	@GetMapping("/teams")
+	@GetMapping("/api/teams")
 	public List<Team> findAll() {
 		return teamService.findAll();
 	}
 
 	//to create
-	@PostMapping("/team")
+	@PostMapping("/api/team")
 	public Team add(@RequestBody Team team) {
 		teamService.save(team);
 		return team;
 	}
 
 	//to update
-	@PutMapping("/team")
+	@PutMapping("/api/team")
 	public void update(@RequestBody Team team) {
 		teamService.update(team);
 	}
 
 	//to delete
-	@DeleteMapping("/team/{id}")
+	@DeleteMapping("/api/team/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		teamService.delete(id);
 	}

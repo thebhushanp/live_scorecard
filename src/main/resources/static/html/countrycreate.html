@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript">
+	function save() {
+		var data = {};
+		data.code = document.getElementById('txtCode').value;
+		data.name  = document.getElementById('txtName').value;
+		var jsonString = JSON.stringify(data);
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/country/";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				window.location = "/html/countries.html";
+			}
+		};
+		xmlhttp.open("POST", url, true);
+		xmlhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+		xmlhttp.send(jsonString);
+	}
+</script>
 </head>
 <body>
-	<form action="/country" method="post">
-		<h1>Country:Create</h1>
-		<label>Country Code: </label><input type="text" value="" name="code"
-			placeholder="Enter the country code here"> <br> <br>
-		<label>Country Name: </label><input type="text" value="" name="name"
-			placeholder="Enter the country name"> 
-		<button type="submit">Save</button>
-	</form>
+	<h1>Country:Create</h1>
+	<table>
+		<tr>
+			<td><label>Country Code: </label></td>
+			<td><input id="txtCode" type="text" value="" name="code"
+				placeholder="Enter the country code here"></td>
+		</tr>
+		<tr>
+			<td><label>Country Name: </label></td>
+			<td><input id="txtName" type="text" value="" name="name"
+				placeholder="Enter the country name"></td>
+		</tr>
+		<tr>
+			<td><button onclick="save()">Save</button></td>
+		</tr>
+	</table>
 </body>
 </html>
 

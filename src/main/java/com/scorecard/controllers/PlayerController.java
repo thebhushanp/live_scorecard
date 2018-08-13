@@ -20,31 +20,31 @@ public class PlayerController {
 	@Autowired
 	PlayerService playerService;
 
-	@GetMapping("/player/{id}")
+	@GetMapping("/api/player/{id}")
 	public Player findPlayer(@PathVariable("id") Integer id) {
 		return playerService.findOne(id);
 	}
 
-	@GetMapping("/players")
+	@GetMapping("/api/players")
 	public List<Player> findAll() {
 		return playerService.findAll();
 	}
 
 	//to create
-	@PostMapping("/player")
+	@PostMapping("/api/player")
 	public Player add(@RequestBody Player player) {
 		playerService.save(player);
 		return player;
 	}
 
 	//to update
-	@PutMapping("/player")
+	@PutMapping("/api/player")
 	public void update(@RequestBody Player player) {
 		playerService.update(player);
 	}
 
 	//to delete
-	@DeleteMapping("/player/{id}")
+	@DeleteMapping("/api/player/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		playerService.delete(id);
 	}

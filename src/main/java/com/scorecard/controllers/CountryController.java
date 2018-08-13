@@ -20,31 +20,31 @@ public class CountryController {
 	@Autowired
 	CountryService countryService;
 
-	@GetMapping("/country/{id}")
+	@GetMapping("/api/country/{id}")
 	public Country findCountry(@PathVariable("id") Integer id) {
 		return countryService.findOne(id);
 	}
 
-	@GetMapping("/countries")
+	@GetMapping("/api/countries")
 	public List<Country> findAll() {
 		return countryService.findAll();
 	}
 
 	//to create
-	@PostMapping("/country")
+	@PostMapping("/api/country")
 	public Country add(@RequestBody Country country) {
 		countryService.save(country);
 		return country;
 	}
 
 	//to update
-	@PutMapping("/country")
+	@PutMapping("/api/country")
 	public void update(@RequestBody Country country) {
 		countryService.update(country);
 	}
 
 	//to delete
-	@DeleteMapping("/country/{id}")
+	@DeleteMapping("/api/country/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		countryService.delete(id);
 	}

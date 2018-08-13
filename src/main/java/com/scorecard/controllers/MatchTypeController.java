@@ -20,31 +20,31 @@ public class MatchTypeController {
 	@Autowired
 	MatchTypeService matchtypeService;
 
-	@GetMapping("/matchtype/{id}")
+	@GetMapping("/api/matchtype/{id}")
 	public MatchType findMatchType(@PathVariable("id") Integer id) {
 		return matchtypeService.findOne(id);
 	}
 
-	@GetMapping("/matchtypes")
+	@GetMapping("/api/matchtypes")
 	public List<MatchType> findAll() {
 		return matchtypeService.findAll();
 	}
 
 	//to create
-	@PostMapping("/matchtype")
+	@PostMapping("/api/matchtype")
 	public MatchType add(@RequestBody MatchType matchtype) {
 		matchtypeService.save(matchtype);
 		return matchtype;
 	}
 
 	//to update
-	@PutMapping("/matchtype")
+	@PutMapping("/api/matchtype")
 	public void update(@RequestBody MatchType matchtype) {
 		matchtypeService.update(matchtype);
 	}
 
 	//to delete
-	@DeleteMapping("/matchtype/{id}")
+	@DeleteMapping("/api/matchtype/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		matchtypeService.delete(id);
 	}

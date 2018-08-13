@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript">
+	window.onload = function() {
+		var urlParams = new URLSearchParams(location.search);
+		var id = urlParams.get('id');
+
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/country/" + id;
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var countryData = JSON.parse(this.responseText);
+				renderCountry(countryData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+
+	function renderCountry(country) {
+		var lblCode = document.getElementById("lblCode");
+		lblCode.innerHTML = country.code;
+
+		var lblName = document.getElementById("lblName");
+		lblName.innerHTML = country.name;
+	}
+</script>
 </head>
 <body>
- <form>
-<h1>Country:View</h1>
-  <label>Country Code: </label>
-         <br>
-         <br>
-         <label>Country Name: </label>
-         <br>
-         <br>
-       <a href="countrylistview.html"><button type="button">Back</button></a> 
-</form> 
+	<form>
+		<h1>Country:View</h1>
+		<label>Country Code: </label> <label id="lblCode"></label> <br> <br>
+		<label>Country Name: </label> <label id="lblName"></label> <br> <br>
+		<a href="/html/countries.html">Back</a>
+	</form>
 </body>
 </html>
 

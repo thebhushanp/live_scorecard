@@ -20,31 +20,31 @@ public class MatchController {
 	@Autowired
 	MatchService matchService;
 
-	@GetMapping("/match/{id}")
+	@GetMapping("/api/match/{id}")
 	public Match findOne(@PathVariable("id") Integer id) {
 		return matchService.findOne(id);
 	}
 
-	@GetMapping("/matches")
+	@GetMapping("/api/matches")
 	public List<Match> findAll() {
 		return matchService.findAll();
 	}
 
 	//to create
-	@PostMapping("/match")
+	@PostMapping("/api/match")
 	public Match add(@RequestBody Match match) {
 		matchService.save(match);
 		return match;
 	}
 
 	//to update
-	@PutMapping("/match")
+	@PutMapping("/api/match")
 	public void update(@RequestBody Match match) {
 		matchService.update(match);
 	}
 
 	//to delete
-	@DeleteMapping("/match/{id}")
+	@DeleteMapping("/api/match/{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		matchService.delete(id);
 	}
