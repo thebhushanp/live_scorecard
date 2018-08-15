@@ -1,13 +1,57 @@
 <html>
 <head>
+<style>
+body {
+	margin: 0;
+}
+
+.topnav {
+	overflow: hidden;
+	background-color: #125D8F;
+}
+
+.topnav a {
+	float: left;
+	position:relative;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.topnav a:hover {
+	background-color: #082B47;
+	color: white;
+}
+
+.topnav a.active {
+	background-color: #0C4F7F;
+	color: white;
+}
+
+.topnav-right {
+	float: right;
+}
+</style>
 </head>
 <body>
-	<h1>Home</h1>
-	<ol>
-		<li><a href="html/countries.html">Country</a></li>
-		<li>abc</li>
-		<li>abc</li>
-	</ol>
+	<div class="topnav">
+		<a href="../index.html">Live ScoreCard</a>
+		<div class="topnav-right">
+			<a href="../index.html">Home</a>
+			<ul> <a href="#">Master &raquo;</a>
+	            <li><a href="#blk-1">Div 1</a></li>
+                <li><a href="#blk-2">Div 2</a></li>
+                <li><a href="#blk-3">Div 3</a></li>
+                <li><a href="#blk-4">Div 4</a></li>
+                </ul>
+		</div>
+	</div>
+       			<a href="html/countries.html">Country</a>
+			<a href="html/players.html">Players</a>
+			<a href="html/teamtypes.html">Team type</a>
+			<a href="html/matchtypes.html">Match type</a> 
 </body>
 </html>
 

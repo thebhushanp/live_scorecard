@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script>
+	window.onload = function() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/teamtypes";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var teamtypeData = JSON.parse(this.responseText);
+				renderTeamTypes(teamtypeData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+
+	function renderTeamTypes(teamtypeData) {
+		var tblTeamType = document.getElementById("tblTeamType");
+		for (var index = 0; index < teamtypeData.length; index++) {
+			var teamtypeId = teamtypeData[index].id;
+
+			var tr = document.createElement("tr");
+
+			var tdName = document.createElement("td");
+			var tdAction = document.createElement("td");
+
+			var txtName = document.createTextNode(teamtypeData[index].name);
+
+			var linkView = document.createElement("a");
+			linkView.setAttribute('href', "/html/teamtypeview.html?id="
+					+ teamtypeId);
+			linkView.innerHTML = "View";
+
+			var linkEdit = document.createElement("a");
+			linkEdit.setAttribute('href', "/html/teamtypeupdate.html?id="
+					+ teamtypeId);
+			linkEdit.innerHTML = "Edit";
+
+			var btnDelete = document.createElement("button");
+			btnDelete.setAttribute('pk', teamtypeId);
+			btnDelete.addEventListener("click", deleteTeamType, false)
+			var btnDelText = document.createTextNode("Delete");
+			btnDelete.appendChild(btnDelText);
+
+			tdAction.appendChild(linkView);
+			tdAction.appendChild(linkEdit);
+			tdAction.appendChild(btnDelete);
+			tdName.appendChild(txtName);
+			tr.appendChild(tdName);
+			tr.appendChild(tdAction);
+			tblTeamType.appendChild(tr);
+		}
+	}
+
+	function deleteTeamType(evt) {
+		var targetComp = evt.target;
+		var pk = targetComp.getAttribute('pk');
+
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/teamtype/" + pk;
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				alert('team type deleted');
+				var td = targetComp.parentElement;
+				var tr = td.parentElement;
+				var table = tr.parentElement;
+				table.removeChild(tr);
+			}
+		};
+		xmlhttp.open("DELETE", url, true);
+		xmlhttp.send();
+	}
+</script>
+</head>
+<body>
+	<a href="teamtypecreate.html">Add Team Type</a>
+	<table id="tblTeamType">
+		<tr>
+			<th>Name</th>
+			<th>Action</th>
+		</tr>
+	</table>
+</body>
+</html>

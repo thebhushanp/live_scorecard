@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+table {
+	border-collapse: collapse;
+}
+
+body {
+	margin: 0;
+}
+
+.topnav {
+	overflow: hidden;
+	background-color: #125D8F;
+}
+
+.topnav a {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.topnav a:hover {
+	background-color: #082B47;
+	color: white;
+}
+
+.topnav a.active {
+	background-color: #0C4F7F;
+	color: white;
+}
+
+.topnav-right {
+	float: right;
+}
+
+h1 {
+	text-align: right;
+}
+
+table {
+	margin-top: 15%;
+	width: 30%;
+	height: 30%;
+	background-color: #A9A9A9;
+	text-align: center;
+	border-radius: 10px;
+}
+</style>
+
+<script>
+	window.onload = function() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/matchtypes";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var matchtypeData = JSON.parse(this.responseText);
+				renderMatchTypes(matchtypeData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+
+	function renderMatchTypes(matchtypeData) {
+		var tblMatchType = document.getElementById("tblMatchType");
+		for (var index = 0; index < matchtypeData.length; index++) {
+			var matchtypeId = matchtypeData[index].id;
+
+			var tr = document.createElement("tr");
+
+			var tdName = document.createElement("td");
+			var tdAction = document.createElement("td");
+
+			var txtName = document.createTextNode(matchtypeData[index].name);
+
+			var linkView = document.createElement("a");
+			linkView.setAttribute('href', "/html/matchtypeview.html?id="
+					+ matchtypeId);
+			linkView.innerHTML = "View";
+
+			var linkEdit = document.createElement("a");
+			linkEdit.setAttribute('href', "/html/matchtypeupdate.html?id="
+					+ matchtypeId);
+			linkEdit.innerHTML = "Edit";
+
+			var btnDelete = document.createElement("button");
+			btnDelete.setAttribute('pk', matchtypeId);
+			btnDelete.addEventListener("click", deleteMatchType, false)
+			var btnDelText = document.createTextNode("Delete");
+			btnDelete.appendChild(btnDelText);
+
+			tdAction.appendChild(linkView);
+			tdAction.appendChild(linkEdit);
+			tdAction.appendChild(btnDelete);
+			tdName.appendChild(txtName);
+			tr.appendChild(tdName);
+			tr.appendChild(tdAction);
+			tblMatchType.appendChild(tr);
+		}
+	}
+
+	function deleteMatchType(evt) {
+		var targetComp = evt.target;
+		var pk = targetComp.getAttribute('pk');
+
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/matchtype/" + pk;
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				alert('match type deleted');
+				var td = targetComp.parentElement;
+				var tr = td.parentElement;
+				var table = tr.parentElement;
+				table.removeChild(tr);
+			}
+		};
+		xmlhttp.open("DELETE", url, true);
+		xmlhttp.send();
+	}
+	
+</script>
+</head>
+
+<body>
+	<div class="topnav">
+		<div class="topnav-right">
+			<a href="../index.html">Home</a>
+		</div>
+	</div>
+	<a href="matchtypecreate.html">Add Match Type</a>
+	<table id="tblMatchType">
+		<tr>
+			<th>Name</th>
+			<th>Action</th>
+		</tr>
+	</table>
+</body>
+
+</html>

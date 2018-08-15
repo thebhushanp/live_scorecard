@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+	window.onload = function() {
+		var urlParams = new URLSearchParams(location.search);
+		var id = urlParams.get('id');
+
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/teamtype/" + id;
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var teamtypeData = JSON.parse(this.responseText);
+				renderTeamType(teamtypeData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+
+	function renderTeamType(teamtype) {
+		var lblName = document.getElementById("lblName");
+		lblName.innerHTML = teamtype.name;
+	}
+</script>
+</head>
+<body>
+	<form>
+		<h1>Team Type:View</h1>
+		<label>Team Type Name: </label> <label id="lblName"></label> <br> <br>
+		<a href="/html/teamtypes.html">Back</a>
+	</form>
+</body>
+</html>
+

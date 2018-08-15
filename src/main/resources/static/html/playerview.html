@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+	window.onload = function() {
+		var urlParams = new URLSearchParams(location.search);
+		var id = urlParams.get('id');
+
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/player/" + id;
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var playerData = JSON.parse(this.responseText);
+				renderPlayer(playerData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+
+	function renderPlayer(player) {
+		var lblName = document.getElementById("lblName");
+		lblName.innerHTML = player.name;
+
+		var lblAge = document.getElementById("lblAge");
+		lblAge.innerHTML = player.age;
+	}
+</script>
+</head>
+<body>
+	<form>
+		<h1>Player:view</h1>
+		<label>Player Name: </label> <label id="lblName"></label> <br> <br>
+		<label>Player Age: </label> <label id="lblAge"></label> <br> <br>	
+		<a href="/html/players.html">Back</a>
+	</form>
+</body>
+</html>
+

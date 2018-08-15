@@ -6,59 +6,51 @@
 		var urlParams = new URLSearchParams(location.search);
 		var id = urlParams.get('id');
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/country/" + id;
+		var url = "/api/teamtype/" + id;
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				var countryData = JSON.parse(this.responseText);
-				renderCountry(countryData);
+				var teamtypeData = JSON.parse(this.responseText);
+				renderTeamType(teamtypeData);
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
 
-	function renderCountry(country) {
-		var txtCode = document.getElementById("txtCode");
-		txtCode.value = country.code;
-
+	function renderTeamType(teamtype) {
 		var txtName = document.getElementById("txtName");
-		txtName.value = country.name;
+		txtName.value = teamtype.name;
 	}
-	
+
 	function onUpdate() {
 		var urlParams = new URLSearchParams(location.search);
 		var id = urlParams.get('id');
-		var txtCode = document.getElementById("txtCode");
 		var txtName = document.getElementById("txtName");
 		var data = {};
-		data.code = txtCode.value;
-		data.name  = txtName.value;
-		data.id = id; 
+		data.name = txtName.value;
+		data.id = id;
 		var jsonString = JSON.stringify(data);
-		
+
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/country/";
+		var url = "/api/teamtype/";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				window.location = "/html/countries.html";
+				window.location = "/html/teamtypes.html";
 			}
 		};
 		xmlhttp.open("PUT", url, true);
-		xmlhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+		xmlhttp.setRequestHeader('Content-type',
+				'application/json; charset=utf-8');
 		xmlhttp.send(jsonString);
 	}
 </script>
 </head>
 <body>
 	<form>
-		<h1>Country:Update</h1>
-		<label>Country Code: </label> 
-		<input id="txtCode" type="text" name="code"> <br> <br> 
-		<label>Country Name:</label> 
-		<input id="txtName" type="text" value="" name="name"> <br> <br>
-		<input onclick="onUpdate()" type="button" value="Update">
-		
+		<h1>Team Type:Update</h1>
+		 <label>Team Type Name:</label><input id="txtName" type="text" value="" name="name"> <br>
+		<br> <input onclick="onUpdate()" type="button" value="Update">
+
 	</form>
 </body>
 </html>
-
