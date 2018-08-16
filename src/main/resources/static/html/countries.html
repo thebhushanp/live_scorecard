@@ -1,58 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-<style>
-table {
-	border-collapse: collapse;
-}
-
-body {
-	margin: 0;
-}
-
-.topnav {
-	overflow: hidden;
-	background-color: #125D8F;
-}
-
-.topnav a {
-	float: left;
-	color: #f2f2f2;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-	font-size: 17px;
-}
-
-.topnav a:hover {
-	background-color: #082B47;
-	color: white;
-}
-
-.topnav a.active {
-	background-color: #0C4F7F;
-	color: white;
-}
-
-.topnav-right {
-	float: right;
-}
-
-h1 {
-	text-align: right;
-}
-
-table {
-	margin-top: 15%;
-	width: 30%;
-	height: 30%;
-	background-color: #A9A9A9;
-	text-align: center;
-	border-radius: 10px;
-}
-</style>
-
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script>
 	window.onload = function() {
 		var xmlhttp = new XMLHttpRequest();
@@ -129,14 +78,25 @@ table {
 		xmlhttp.open("DELETE", url, true);
 		xmlhttp.send();
 	}
-	
 </script>
 </head>
 
 <body>
-	<div class="topnav">
+	<div class="navbar">
+		<a href="../index.html">Live ScoreCard</a>
 		<div class="topnav-right">
 			<a href="../index.html">Home</a>
+			<div class="dropdown">
+				<button class="dropbtn">
+					Master <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="/html/countries.html">Country</a> 
+					<a href="/html/players.html">Players</a> 
+					<a href="/html/teamtypes.html">Team type</a> 
+					<a href="/html/matchtypes.html">Match type</a>
+				</div>
+			</div>
 		</div>
 	</div>
 	<a href="countrycreate.html">Add Country</a>

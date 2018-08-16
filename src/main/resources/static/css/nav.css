@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
+
 body {
 	margin: 0;
 }
@@ -70,37 +67,3 @@ body {
 .topnav-right {
 	float: right;
 }
-</style>
-<script type="text/javascript">
-	window.onload = function() {
-		var urlParams = new URLSearchParams(location.search);
-		var id = urlParams.get('id');
-
-		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/matchtype/" + id;
-		xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var matchtypeData = JSON.parse(this.responseText);
-				renderMatchType(matchtypeData);
-			}
-		};
-		xmlhttp.open("GET", url, true);
-		xmlhttp.send();
-	}
-
-	function renderMatchType(matchtype) {
-
-		var lblName = document.getElementById("lblName");
-		lblName.innerHTML = matchtype.name;
-	}
-</script>
-</head>
-<body>
-	<form>
-		<h1>Match Type:View</h1>
-		<label>Match Type Name: </label> <label id="lblName"></label> <br> <br>
-		<a href="/html/matchtypes.html">Back</a>
-	</form>
-</body>
-</html>
-

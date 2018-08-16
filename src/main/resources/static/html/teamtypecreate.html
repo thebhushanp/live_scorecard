@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	function save() {
 		var data = {};
-		data.name  = document.getElementById('txtName').value;
+		data.name = document.getElementById('txtName').value;
 		var jsonString = JSON.stringify(data);
 		var xmlhttp = new XMLHttpRequest();
 		var url = "/api/teamtype/";
@@ -14,7 +14,8 @@
 			}
 		};
 		xmlhttp.open("POST", url, true);
-		xmlhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+		xmlhttp.setRequestHeader('Content-type',
+				'application/json; charset=utf-8');
 		xmlhttp.send(jsonString);
 	}
 </script>
@@ -23,9 +24,29 @@
 	<h1>Team Type:Create</h1>
 	<table>
 		<tr>
-			<td><label>Team Type Name: </label></td>
+			<td><label>Team Name: </label></td>
 			<td><input id="txtName" type="text" value="" name="name"
-				placeholder="Enter the Team Type"></td>
+				placeholder="Enter the Team Name"></td>
+		</tr>
+		<tr>
+			<td><label>Team Type: </label></td>
+			<td><select name="teamtype">
+					<option value="select">Select</option>		
+					<option value="men">Men</option>
+					<option value="women">Women</option>
+					<option value="under18m">Under 18 men</option>
+					<option value="under18w">Under 18 women</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td><label>Captain: </label></td>
+			<td><select name="captain">
+					<option value="select">Select</option>		
+					<option value="abc">abc</option>
+					<option value="xyz">xyz</option>
+					<option value="qwe">qwe</option>
+					<option value="asd">asd</option>
+			</select></td>
 		</tr>
 		<tr>
 			<td><button onclick="save()">Save</button></td>

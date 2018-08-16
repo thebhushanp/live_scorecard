@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
 	window.onload = function() {
 		var urlParams = new URLSearchParams(location.search);
@@ -50,6 +51,22 @@
 </script>
 </head>
 <body>
+<div class="navbar">
+		<a href="../index.html">Live ScoreCard</a>
+		<div class="topnav-right">
+			<a href="../index.html">Home</a>
+			<div class="dropdown">
+				<button class="dropbtn">
+					Master <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="/html/countries.html">Country</a> <a
+						href="/html/players.html">Players</a> <a href="/html/teamtypes.html">Team
+						type</a> <a href="/html/matchtypes.html">Match type</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<form>
 		<h1>Country:Update</h1>
 		<label>Country Code: </label> 
