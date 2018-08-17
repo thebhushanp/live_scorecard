@@ -14,13 +14,12 @@ create table team(id SERIAL primary key ,
 	teamtype integer  REFERENCES teamtype(id),
 	captain integer  REFERENCES player(id),
 	wicketkepper integer REFERENCES player(id));
+	
 ALTER TABLE team
-ADD COLUMN teamname varchar(40) not null
+	ADD COLUMN teamname varchar(40) not null;
+	
 create table teamtypemapping(teamid integer REFERENCES team(id),
 	playerid integer REFERENCES player(id));
-
-create table teamtype(id SERIAL primary key ,
-	name varchar(30) not null);	
 	
 create table match(id SERIAL primary key,
 	matchtype integer REFERENCES matchtype(id),
