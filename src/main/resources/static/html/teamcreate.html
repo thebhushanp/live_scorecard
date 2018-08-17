@@ -97,7 +97,6 @@
 		data.teamtype=ttObj;
 		data.teamname=document.getElementById("txtTeamName").value;
 		var jsonString = JSON.stringify(data);
-		alert(jsonString);
 		var xmlhttp = new XMLHttpRequest();
 		var url = "/api/team/";
 		xmlhttp.onreadystatechange = function() {
