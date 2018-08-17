@@ -86,9 +86,15 @@
 		var wk = sbWK.options[sbWK.selectedIndex].value;
 		var sbtt = document.getElementById('teamtype');
                 var tt = sbtt.options[sbtt.selectedIndex].value;
-		data.wicketkepper=wk;
-		data.captain=captain;
-		data.teamtype=tt;
+		var wkObj = {};
+		wkObj.id=wk;
+		data.wicketkepper=wkObj;
+		var captainObj = {};
+		captainObj.id=captain;
+		data.captain=captainObj;
+		var ttObj = {};
+		ttObj.id = tt;
+		data.teamtype=ttObj;
 		data.teamname=document.getElementById("txtTeamName").value;
 		var jsonString = JSON.stringify(data);
 		alert(jsonString);
