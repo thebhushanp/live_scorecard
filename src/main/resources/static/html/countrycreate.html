@@ -6,7 +6,7 @@
 	function save() {
 		var data = {};
 		data.code = document.getElementById('txtCode').value;
-		data.name  = document.getElementById('txtName').value;
+		data.name = document.getElementById('txtName').value;
 		var jsonString = JSON.stringify(data);
 		var xmlhttp = new XMLHttpRequest();
 		var url = "/api/country/";
@@ -16,13 +16,14 @@
 			}
 		};
 		xmlhttp.open("POST", url, true);
-		xmlhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+		xmlhttp.setRequestHeader('Content-type',
+				'application/json; charset=utf-8');
 		xmlhttp.send(jsonString);
 	}
 </script>
 </head>
 <body>
-<div class="navbar">
+	<div class="navbar">
 		<a href="../index.html">Live ScoreCard</a>
 		<div class="topnav-right">
 			<a href="../index.html">Home</a>
@@ -32,8 +33,10 @@
 				</button>
 				<div class="dropdown-content">
 					<a href="/html/countries.html">Country</a> <a
-						href="/html/players.html">Players</a> <a href="/html/teamtypes.html">Team
-						type</a> <a href="/html/matchtypes.html">Match type</a>
+						href="/html/players.html">Players</a> <a
+						href="/html/teamtypes.html">Team type</a> <a
+						href="/html/matchtypes.html">Match type</a> <a
+						href="/html/teams.html">Teams</a>
 				</div>
 			</div>
 		</div>

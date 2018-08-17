@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
+<script type="text/javascript">
+	window.onload = function() {
+		fetchTeamType();
+		fetchTeamCaptain();
+		fetchTeamWicketkepper();
+	}
+	function fetchTeamType() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/teamtypes";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var teamData = JSON.parse(this.responseText);
+				populateTeamType(teamData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+	function populateTeamType(teamData) {
+		var sel = document.getElementById('teamtype');
+
+		for (var index = 0; index < teamData.length; index++) {
+			var opt = teamData[index];
+			var el = document.createElement('option');
+			el.text = opt.name;
+			el.value = opt.name;
+			sel.appendChild(el);
+		}
+	}
+
+	function fetchTeamCaptain() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/players";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var playerData = JSON.parse(this.responseText);
+				populateCaptain(playerData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+	function populateCaptain(playerData) {
+		var sel = document.getElementById('captain');
+
+		for (var index = 0; index < playerData.length; index++) {
+			var opt = playerData[index];
+			var el = document.createElement('option');
+			el.text = opt.name;
+			el.value = opt.name;
+			sel.appendChild(el);
+		}
+	}
+	function fetchTeamWicketkepper() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/players";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var playerData = JSON.parse(this.responseText);
+				populateWicketkepper(playerData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+	function populateWicketkepper(playerData) {
+		var sel = document.getElementById('wicketkepper');
+
+		for (var index = 0; index < playerData.length; index++) {
+			var opt = playerData[index];
+			var el = document.createElement('option');
+			el.text = opt.name;
+			el.value = opt.name;
+			sel.appendChild(el);
+		}
+	}
+	function save() {
+		var data = {};
+		data.code = document.getElementById('txtCode').value;
+		data.name = document.getElementById('txtName').value;
+		var jsonString = JSON.stringify(data);
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/country/";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				window.location = "/html/countries.html";
+			}
+		};
+		xmlhttp.open("POST", url, true);
+		xmlhttp.setRequestHeader('Content-type',
+				'application/json; charset=utf-8');
+		xmlhttp.send(jsonString);
+	}
+</script>
+</head>
+<body>
+	<div class="navbar">
+		<a href="../index.html">Live ScoreCard</a>
+		<div class="topnav-right">
+			<a href="../index.html">Home</a>
+			<div class="dropdown">
+				<button class="dropbtn">
+					Master <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="/html/countries.html">Country</a> <a
+						href="/html/players.html">Players</a> <a
+						href="/html/teamtypes.html">Team type</a> <a
+						href="/html/matchtypes.html">Match type</a> <a
+						href="/html/teams.html">Teams</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<h1>Team:Create</h1>
+	<table>
+		<tr>
+			<td><label>Team Name: </label></td>
+			<td><input id="txtTeamName" type="text" value="" name="tname"
+				placeholder="Enter the Team name here"></td>
+		</tr>
+		<tr>
+			<td><label>Team Type: </label></td>
+			<td><select id="teamtype" name="teamtype">
+
+			</select></td>
+		</tr>
+		<tr>
+			<td><label>Captain: </label></td>
+			<td><select id="captain" name="captain">
+			</select></td>
+		</tr>
+		<tr>
+			<td><label>Wicketkepper: </label></td>
+			<td><select id="wicketkepper" name="wicketkepper">
+			</select></td>
+		</tr>
+		<tr>
+			<td><button onclick="save()">Save</button></td>
+		</tr>
+	</table>
+</body>
+</html>

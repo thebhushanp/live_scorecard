@@ -5,64 +5,70 @@
 <script>
 	window.onload = function() {
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/teamtypes";
+		var url = "/api/teams";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				var teamtypeData = JSON.parse(this.responseText);
-				renderTeamTypes(teamtypeData);
+				var teamData = JSON.parse(this.responseText);
+				renderTeams(teamData);
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
 
-	function renderTeamTypes(teamtypeData) {
-		var tblTeamType = document.getElementById("tblTeamType");
-		for (var index = 0; index < teamtypeData.length; index++) {
-			var teamtypeId = teamtypeData[index].id;
+	function renderTeams(teamData) {
+		var tblTeam = document.getElementById("tblTeam");
+		for (var index = 0; index < teamData.length; index++) {
+			var teamId = teamData[index].id;
 
 			var tr = document.createElement("tr");
-
-			var tdName = document.createElement("td");
+			
+			var tdTeamName = document.ctrateElement("td");
+			var tdTeamType = document.createElement("td");
+			var tdCaptain = document.createElement("td");
 			var tdAction = document.createElement("td");
 
-			var txtName = document.createTextNode(teamtypeData[index].name);
+			var selTeamName = document.craeteTextNode(teamData[index].teamname);
+			var selTeamType = document.createTextNode(teamData[index].teamtype);
+			var selCaptain = document.createTextNode(teamData[index].captain);
 
 			var linkView = document.createElement("a");
-			linkView.setAttribute('href', "/html/teamtypeview.html?id="
-					+ teamtypeId);
+			linkView.setAttribute('href', "/html/teamview.html?id=" + teamId);
 			linkView.innerHTML = "View";
 
 			var linkEdit = document.createElement("a");
-			linkEdit.setAttribute('href', "/html/teamtypeupdate.html?id="
-					+ teamtypeId);
+			linkEdit.setAttribute('href', "/html/teamupdate.html?id=" + teamId);
 			linkEdit.innerHTML = "Edit";
 
 			var btnDelete = document.createElement("button");
-			btnDelete.setAttribute('pk', teamtypeId);
-			btnDelete.addEventListener("click", deleteTeamType, false)
+			btnDelete.setAttribute('pk', teamId);
+			btnDelete.addEventListener("click", deleteTeam, false)
 			var btnDelText = document.createTextNode("Delete");
 			btnDelete.appendChild(btnDelText);
 
 			tdAction.appendChild(linkView);
 			tdAction.appendChild(linkEdit);
 			tdAction.appendChild(btnDelete);
-			tdName.appendChild(txtName);
-			tr.appendChild(tdName);
+			tdTeamName.appendChild(txtTeamName);
+			tdTeamType.appendChild(txtTeamType);
+			tdCaptain.appendChild(txtCaptain);
+			tr.appendChild(tdTeamName);
+			tr.appendChild(tdTeamType);
+			tr.appendChild(tdCaptain);
 			tr.appendChild(tdAction);
-			tblTeamType.appendChild(tr);
+			tblTeam.appendChild(tr);
 		}
 	}
 
-	function deleteTeamType(evt) {
+	function deleteTeam(evt) {
 		var targetComp = evt.target;
 		var pk = targetComp.getAttribute('pk');
 
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/teamtype/" + pk;
+		var url = "/api/team/" + pk;
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				alert('team type deleted');
+				alert('team deleted');
 				var td = targetComp.parentElement;
 				var tr = td.parentElement;
 				var table = tr.parentElement;
@@ -74,8 +80,9 @@
 	}
 </script>
 </head>
+
 <body>
-<div class="navbar">
+	<div class="navbar">
 		<a href="../index.html">Live ScoreCard</a>
 		<div class="topnav-right">
 			<a href="../index.html">Home</a>
@@ -84,22 +91,24 @@
 					Master <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-					<a href="/html/countries.html">Country</a> 
-					<a href="/html/players.html">Players</a> 
-					<a href="/html/teamtypes.html">Team type</a> 
-					<a href="/html/matchtypes.html">Match type</a>
-					<a href="/html/teams.html">Teams</a>
+					<a href="/html/countries.html">Country</a> <a
+						href="/html/players.html">Players</a> <a
+						href="/html/teamtypes.html">Team type</a> <a
+						href="/html/matchtypes.html">Match type</a>
+				<a href="/html/teams.html">Teams</a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<a href="teamtypecreate.html">Add Team Type</a>
-	<table id="tblTeamType">
-
+	<a href="teamcreate.html">Add Team</a>
+	<table id="tblTeam">
 		<tr>
-			<th>Name</th>
+			<th>Team Name</th>
+			<th>Team Type</th>
+			<th>Captain</th>
 			<th>Action</th>
 		</tr>
 	</table>
 </body>
+
 </html>
