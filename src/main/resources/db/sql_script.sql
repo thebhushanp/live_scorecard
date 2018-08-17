@@ -10,6 +10,10 @@ create table player(id SERIAL primary key ,
 create table teamtype(id SERIAL primary key ,
 	name varchar(80) not null);
 
+create table matchtype(id SERIAL primary key ,
+	name varchar(80) not null);
+
+
 create table team(id SERIAL primary key ,
 	teamtype integer  REFERENCES teamtype(id),
 	captain integer  REFERENCES player(id),
