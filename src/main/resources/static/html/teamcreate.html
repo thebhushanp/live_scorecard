@@ -27,7 +27,7 @@
 			var opt = teamData[index];
 			var el = document.createElement('option');
 			el.text = opt.name;
-			el.value = opt.name;
+			el.value = opt.id;
 			sel.appendChild(el);
 		}
 	}
@@ -51,7 +51,7 @@
 			var opt = playerData[index];
 			var el = document.createElement('option');
 			el.text = opt.name;
-			el.value = opt.name;
+			el.value = opt.id;
 			sel.appendChild(el);
 		}
 	}
@@ -74,20 +74,29 @@
 			var opt = playerData[index];
 			var el = document.createElement('option');
 			el.text = opt.name;
-			el.value = opt.name;
+			el.value = opt.id;
 			sel.appendChild(el);
 		}
 	}
 	function save() {
 		var data = {};
-		data.code = document.getElementById('txtCode').value;
-		data.name = document.getElementById('txtName').value;
+		var sbCaptain  = document.getElementById('captain');
+		var captain = sbCaptain.options[sbCaptain.selectedIndex].value;
+		var sbWK = document.getElementById('wicketkepper');
+		var wk = sbWK.options[sbWK.selectedIndex].value;
+		var sbtt = document.getElementById('teamtype');
+                var tt = sbtt.options[sbtt.selectedIndex].value;
+		data.wicketkepper=wk;
+		data.captain=captain;
+		data.teamtype=tt;
+		data.teamname=document.getElementById("txtTeamName").value;
 		var jsonString = JSON.stringify(data);
+		alert(jsonString);
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/country/";
+		var url = "/api/team/";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				window.location = "/html/countries.html";
+				window.location = "/html/teams.html";
 			}
 		};
 		xmlhttp.open("POST", url, true);

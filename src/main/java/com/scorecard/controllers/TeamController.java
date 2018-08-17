@@ -33,6 +33,7 @@ public class TeamController {
 	//to create
 	@PostMapping("/api/team")
 	public Team add(@RequestBody Team team) {
+		System.out.println(team.getTeamname());
 		teamService.save(team);
 		return team;
 	}

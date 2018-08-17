@@ -20,17 +20,22 @@
 		var tblTeam = document.getElementById("tblTeam");
 		for (var index = 0; index < teamData.length; index++) {
 			var teamId = teamData[index].id;
+			
+			var tt = teamData[index].teamtype;
+			var captain = teamData[index].captain;
+			var wk = teamData[index].wicketkepper;
+			var tname = teamData[index].teamname;
 
 			var tr = document.createElement("tr");
 			
-			var tdTeamName = document.ctrateElement("td");
+			var tdTeamName = document.createElement("td");
 			var tdTeamType = document.createElement("td");
 			var tdCaptain = document.createElement("td");
 			var tdAction = document.createElement("td");
 
-			var selTeamName = document.craeteTextNode(teamData[index].teamname);
-			var selTeamType = document.createTextNode(teamData[index].teamtype);
-			var selCaptain = document.createTextNode(teamData[index].captain);
+			var selTeamName = document.createTextNode(tname);
+			var selTeamType = document.createTextNode(tt.name);
+			var selCaptain = document.createTextNode(captain.name);
 
 			var linkView = document.createElement("a");
 			linkView.setAttribute('href', "/html/teamview.html?id=" + teamId);
@@ -49,9 +54,9 @@
 			tdAction.appendChild(linkView);
 			tdAction.appendChild(linkEdit);
 			tdAction.appendChild(btnDelete);
-			tdTeamName.appendChild(txtTeamName);
-			tdTeamType.appendChild(txtTeamType);
-			tdCaptain.appendChild(txtCaptain);
+			tdTeamName.appendChild(selTeamName);
+			tdTeamType.appendChild(selTeamType);
+			tdCaptain.appendChild(selCaptain);
 			tr.appendChild(tdTeamName);
 			tr.appendChild(tdTeamType);
 			tr.appendChild(tdCaptain);
