@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,9 +15,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.scorecard.models.Player;
 import com.scorecard.models.Team;
 import com.scorecard.models.TeamType;
-import com.scorecard.models.Player;
 
 @Repository
 public class TeamRepository implements RowMapper<Team> {
