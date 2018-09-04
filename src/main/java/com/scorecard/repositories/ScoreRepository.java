@@ -1,10 +1,13 @@
 package com.scorecard.repositories;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.scorecard.models.Score;
 
 @Repository
 public class ScoreRepository {
@@ -29,5 +32,10 @@ public class ScoreRepository {
 			System.out.println(sql);
 			jdbcTemplate.update(sql);
 		}
+	}
+
+	public List<Score> pullScore(Integer matchId, Integer teamId) {
+
+		return null;
 	}
 }
