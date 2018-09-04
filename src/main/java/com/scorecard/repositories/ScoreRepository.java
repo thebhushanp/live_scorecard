@@ -1,16 +1,19 @@
 package com.scorecard.repositories;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.scorecard.models.Score;
 
 @Repository
-public class ScoreRepository {
+public class ScoreRepository implements RowMapper<Score> {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -35,7 +38,19 @@ public class ScoreRepository {
 	}
 
 	public List<Score> pullScore(Integer matchId, Integer teamId) {
+		String getScoreByTeam = "select * from score where player_id in "
+				+ "(select player_id from team_player_mapping  where team_id  = " + teamId + ") and match_id=" + matchId
+				+ ";";
+		return jdbcTemplate.query(getScoreByTeam, this);
+	}
 
-		return null;
+	@Override
+	public Score mapRow(ResultSet rs, int rowId) throws SQLException {
+		Score score = new Score();
+		score.setId(rs.getInt("id"));
+		score.setBalls(rs.getInt("balls"));
+		score.setRuns(rs.getInt("runs"));
+		score.setIsOut(rs.getBoolean("is_out"));
+		return score;
 	}
 }

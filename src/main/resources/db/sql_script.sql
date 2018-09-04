@@ -39,3 +39,8 @@ create table score(id serial primary key,
 	player_id integer references player(id),
 	match_id integer references match(id)
 );
+
+create table team_player_mapping(team_id integer REFERENCES team(id),
+	player_id integer REFERENCES player(id));
+
+-- Need to add team1 and team2 in match table
