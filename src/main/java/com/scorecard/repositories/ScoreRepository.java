@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.scorecard.models.Player;
 import com.scorecard.models.Score;
 
 @Repository
@@ -18,7 +19,7 @@ public class ScoreRepository implements RowMapper<Score> {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public void updateScore(Integer batsman, Integer incrRun, Integer matchId, Integer playerId) {
+	public void updateScore(Integer incrRun, Integer matchId, Integer playerId) {
 		String findScore = "select id from score where player_id=" + playerId + " and match_id=" + matchId + ";";
 		Map<String, Object> score = jdbcTemplate.queryForMap(findScore);
 		if (score.containsKey("id")) {
@@ -29,6 +30,7 @@ public class ScoreRepository implements RowMapper<Score> {
 			String updateSql = "update score set runs=" + run + " balls=" + balls + " where id=" + id + ";";
 			System.out.println(updateSql);
 			jdbcTemplate.update(updateSql);
+			
 		} else {
 			String sql = "INSERT INTO team (runs,player_id,match_id,is_out,balls) values (" + incrRun + "," + playerId
 					+ "," + matchId + "," + false + "," + 1 + ")";
@@ -38,10 +40,12 @@ public class ScoreRepository implements RowMapper<Score> {
 	}
 
 	public List<Score> pullScore(Integer matchId, Integer teamId) {
-		String getScoreByTeam = "select * from score where player_id in "
+		String getScoreWithPlayer = "select s.id id, s.balls balls, s.runs runs, s.is_out, p.name" + 
+				"  from score s, player p where s.player_id=p.id and s.match_id="+matchId+";";
+		/*String getScoreByTeam = "select * from score where player_id in "
 				+ "(select player_id from team_player_mapping  where team_id  = " + teamId + ") and match_id=" + matchId
-				+ ";";
-		return jdbcTemplate.query(getScoreByTeam, this);
+				+ ";";*/
+		return jdbcTemplate.query(getScoreWithPlayer, this);
 	}
 
 	@Override
@@ -51,6 +55,9 @@ public class ScoreRepository implements RowMapper<Score> {
 		score.setBalls(rs.getInt("balls"));
 		score.setRuns(rs.getInt("runs"));
 		score.setIsOut(rs.getBoolean("is_out"));
+		Player player = new Player();
+		player.setName(rs.getString("name"));
+		score.setPlayer(player);
 		return score;
 	}
 }

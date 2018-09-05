@@ -18,9 +18,9 @@ public class ScoreController {
 	private ScoreService scoreService;
 
 	@PutMapping("/api/score/addruns")
-	public void updateScore(@RequestParam("batsman") Integer batsman, @RequestParam("run") Integer incrRun,
+	public void updateScore(@RequestParam("run") Integer incrRun,
 			@RequestParam("matchId") Integer matchId, @RequestParam("playerId") Integer playerId) {
-		scoreService.updateScore(batsman, incrRun, matchId, playerId);
+		scoreService.updateScore(incrRun, matchId, playerId);
 	}
 
 	@GetMapping("/api/score/pull")

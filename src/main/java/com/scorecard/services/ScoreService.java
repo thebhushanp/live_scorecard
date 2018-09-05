@@ -14,8 +14,9 @@ public class ScoreService {
 	@Autowired
 	private ScoreRepository scoreRepo;
 
-	public void updateScore(Integer batsman, Integer incrRun, Integer matchId, Integer playerId) {
-		scoreRepo.updateScore(batsman, incrRun, matchId, playerId);
+	public void updateScore(Integer incrRun, Integer matchId, Integer playerId) {
+		scoreRepo.updateScore(incrRun, matchId, playerId);
+		
 	}
 
 	public List<Score> pullScore(Integer matchId, Integer teamId) {
