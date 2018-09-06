@@ -43,4 +43,8 @@ create table score(id serial primary key,
 create table team_player_mapping(team_id integer REFERENCES team(id),
 	player_id integer REFERENCES player(id));
 
+ALTER TABLE match DROP COLUMN starttime;
+ALTER TABLE match rename column tosswinner to team1;
+ALTER TABLE match rename column batfirst to team2;
+
 -- Need to add team1 and team2 in match table

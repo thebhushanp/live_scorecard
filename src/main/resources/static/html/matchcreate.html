@@ -35,104 +35,98 @@ border-radius:5px;
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
 	window.onload = function() {
-		fetchTeamType();
-		fetchTeamCaptain();
-		fetchTeamWicketkepper();
+		fetchMatchType();
+		fetchTeam1();
+		fetchTeam2();
 	}
-	function fetchTeamType() {
+	function fetchMatchType() {
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/teamtypes";
+		var url = "/api/matchtypes";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var matchData = JSON.parse(this.responseText);
+				populateMatchType(matchData);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+	}
+	function populateMatchType(matchData) {
+		var sel = document.getElementById('matchtype');
+
+		for (var index = 0; index < matchData.length; index++) {
+			var opt = matchData[index];
+			var el = document.createElement('option');
+			el.text = opt.name;
+			el.value = opt.id;
+			sel.appendChild(el);
+		}
+	}
+
+	function fetchTeam1() {
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/teams";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var teamData = JSON.parse(this.responseText);
-				populateTeamType(teamData);
+				populateTeam1(teamData);
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
-	function populateTeamType(teamData) {
-		var sel = document.getElementById('teamtype');
+	function populateTeam1(matchData) {
+		var sel = document.getElementById('team1');
 
-		for (var index = 0; index < teamData.length; index++) {
-			var opt = teamData[index];
+		for (var index = 0; index < matchData.length; index++) {
+			var opt = matchData[index];
 			var el = document.createElement('option');
-			el.text = opt.name;
+			el.text = opt.teamname;
 			el.value = opt.id;
 			sel.appendChild(el);
 		}
 	}
-
-	function fetchTeamCaptain() {
+	function fetchTeam2() {
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/players";
+		var url = "/api/teams";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				var playerData = JSON.parse(this.responseText);
-				populateCaptain(playerData);
+				var matchData = JSON.parse(this.responseText);
+				populateTeam2(matchData);
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
-	function populateCaptain(playerData) {
-		var sel = document.getElementById('captain');
+	function populateTeam2(matchData) {
+		var sel = document.getElementById('team2');
 
-		for (var index = 0; index < playerData.length; index++) {
-			var opt = playerData[index];
+		for (var index = 0; index < matchData.length; index++) {
+			var opt = matchData[index];
 			var el = document.createElement('option');
-			el.text = opt.name;
-			el.value = opt.id;
-			sel.appendChild(el);
-		}
-	}
-	function fetchTeamWicketkepper() {
-		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/players";
-		xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var playerData = JSON.parse(this.responseText);
-				populateWicketkepper(playerData);
-			}
-		};
-		xmlhttp.open("GET", url, true);
-		xmlhttp.send();
-	}
-	function populateWicketkepper(playerData) {
-		var sel = document.getElementById('wicketkepper');
-
-		for (var index = 0; index < playerData.length; index++) {
-			var opt = playerData[index];
-			var el = document.createElement('option');
-			el.text = opt.name;
+			el.text = opt.teamname;
 			el.value = opt.id;
 			sel.appendChild(el);
 		}
 	}
 	function save() {
 		var data = {};
-		var sbCaptain = document.getElementById('captain');
-		var captain = sbCaptain.options[sbCaptain.selectedIndex].value;
-		var sbWK = document.getElementById('wicketkepper');
-		var wk = sbWK.options[sbWK.selectedIndex].value;
-		var sbtt = document.getElementById('teamtype');
-		var tt = sbtt.options[sbtt.selectedIndex].value;
-		var wkObj = {};
-		wkObj.id = wk;
-		data.wicketkepper = wkObj;
-		var captainObj = {};
-		captainObj.id = captain;
-		data.captain = captainObj;
-		var ttObj = {};
-		ttObj.id = tt;
-		data.teamtype = ttObj;
-		data.teamname = document.getElementById("txtTeamName").value;
+		var sbMatchType = document.getElementById('matchtype');
+		var matchtype = sbMatchType.options[sbMatchType.selectedIndex].value;
+		var sbTeam1 = document.getElementById('team1');
+		var team1 = sbTeam1.options[sbTeam1.selectedIndex].value;
+		var sbTeam2 = document.getElementById('team1');
+		var team2 = sbTeam2.options[sbTeam2.selectedIndex].value;
+		data.matchtype = matchtype;
+		data.team1 = team1;
+		data.team2 = team2;
+		data.vengue = document.getElementById("txtvengue").value;
 		var jsonString = JSON.stringify(data);
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/team/";
+		var url = "/api/match/";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				window.location = "/html/teams.html";
+				window.location = "/html/matches.html";
 			}
 		};
 		xmlhttp.open("POST", url, true);
@@ -157,31 +151,32 @@ border-radius:5px;
 						href="/html/teamtypes.html">Team type</a> <a
 						href="/html/matchtypes.html">Match type</a> <a
 						href="/html/teams.html">Teams</a>
+						href="/html/matches.html">matches</a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<h1>Team:Create</h1>
+	<h1>Match:Create</h1>
 	<table align="center">
 		<tr>
-			<td><label>Team Name: </label></td>
-			<td><input id="txtTeamName" type="text" value="" name="tname"
-				placeholder="Enter the Team name here"></td>
-		</tr>
-		<tr>
-			<td><label>Team Type: </label></td>
-			<td><select id="teamtype" name="teamtype">
+			<td><label>Match Type: </label></td>
+			<td><select id="matchtype" name="matchtype">
 
 			</select></td>
 		</tr>
 		<tr>
-			<td><label>Captain: </label></td>
-			<td><select id="captain" name="captain">
+			<td><label>Vengue </label></td>
+			<td><input id="txtvengue" type="text" value="" name="tvengue"
+				placeholder="Enter the Vengue here"></td>
+		</tr>
+		<tr>
+			<td><label>Team1: </label></td>
+			<td><select id="team1" name="team1">
 			</select></td>
 		</tr>
 		<tr>
-			<td><label>Wicketkepper: </label></td>
-			<td><select id="wicketkepper" name="wicketkepper">
+			<td><label>Team2: </label></td>
+			<td><select id="team2" name="team2">
 			</select></td>
 		</tr>
 	</table>

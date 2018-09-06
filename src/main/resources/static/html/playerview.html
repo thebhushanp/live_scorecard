@@ -1,6 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+h1 {
+text-align:right;
+margin-top: 2%;
+		margin-right:1%;
+		color:#1491bd;
+		 text-shadow: 2px 1px;
+}
+table {
+background-color:#C0C0C0;
+border-radius: 15px; 
+width:30%;
+	margin-top:8%;
+	text-align:center;
+	 border-collapse: collapse;
+	 
+}
+td {
+
+padding:15px;
+}
+.backLink {
+text-decoration:none;
+background-color:#1491bd;
+color:white;
+text-align:center;
+ display: inline-block;
+       margin-top:3%;
+       margin-right:1%;
+		float:right;
+    padding: 11px 25px;
+    border-radius:9px;
+
+}
+
+
+</style>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
 	window.onload = function() {
@@ -47,10 +84,18 @@
 		</div>
 	</div>
 	<form>
-		<h1>Player:view</h1>
-		<label>Player Name: </label> <label id="lblName"></label> <br> <br>
-		<label>Player Age: </label> <label id="lblAge"></label> <br> <br>	
-		<a href="/html/players.html">Back</a>
+	<h1>Player:view</h1>
+		<table  align="center">
+			<tr>
+				<td>Player Name:</td>
+				<td id="lblName"></td>
+			</tr>
+			<tr>
+				<td>Player Age:</td>
+				<td id="lblAge"></td>
+			</tr>
+			</table>
+		<a class="backLink" href="/html/players.html">Back</a>
 	</form>
 </body>
 </html>

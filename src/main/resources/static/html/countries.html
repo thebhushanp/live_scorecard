@@ -2,6 +2,46 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
+<style>
+
+table {
+	width :80%;
+	margin-top:12%;
+	text-align:center;
+	 border-collapse: collapse;
+	
+}
+.alignment {
+text-align:center;
+	float:right;
+ background-color: #5EAFEB;	
+ color: white;
+ display: inline-block;
+ text-decoration: none;
+        margin-top: 3%;
+		margin-right:1%;
+    padding: 11px 25px;
+    border-radius:9px;
+}
+th {
+background-color: #2C2C2C;
+color:white;
+}
+table  a {
+ text-decoration:none;
+background-color:#2C2C2C;
+color:white;
+padding:1px;
+text-align:center;
+ margin-right:4px;
+  }
+  button {
+  height: 26px;
+background-color:#2C2C2C;
+color:white;
+  
+  }
+</style>
 <script>
 	window.onload = function() {
 		var xmlhttp = new XMLHttpRequest();
@@ -15,38 +55,30 @@
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
-
 	function renderCountries(countryData) {
 		var tblCountry = document.getElementById("tblCountry");
 		// iterating the countries
 		for (var index = 0; index < countryData.length; index++) {
 			var countryId = countryData[index].id;
-
 			var tr = document.createElement("tr");
-
 			var tdCode = document.createElement("td");
 			var tdName = document.createElement("td");
 			var tdAction = document.createElement("td");
-
 			var txtCode = document.createTextNode(countryData[index].code);
 			var txtName = document.createTextNode(countryData[index].name);
-
 			var linkView = document.createElement("a");
 			linkView.setAttribute('href', "/html/countryview.html?id="
 					+ countryId);
 			linkView.innerHTML = "View";
-
 			var linkEdit = document.createElement("a");
 			linkEdit.setAttribute('href', "/html/countryupdate.html?id="
 					+ countryId);
 			linkEdit.innerHTML = "Edit";
-
 			var btnDelete = document.createElement("button");
 			btnDelete.setAttribute('pk', countryId);
 			btnDelete.addEventListener("click", deleteCountry, false)
 			var btnDelText = document.createTextNode("Delete");
 			btnDelete.appendChild(btnDelText);
-
 			tdAction.appendChild(linkView);
 			tdAction.appendChild(linkEdit);
 			tdAction.appendChild(btnDelete);
@@ -59,11 +91,9 @@
 			//alert(countryData[index].name);
 		}
 	}
-
 	function deleteCountry(evt) {
 		var targetComp = evt.target;
 		var pk = targetComp.getAttribute('pk');
-
 		var xmlhttp = new XMLHttpRequest();
 		var url = "/api/country/" + pk;
 		xmlhttp.onreadystatechange = function() {
@@ -100,8 +130,8 @@
 			</div>
 		</div>
 	</div>
-	<a href="countrycreate.html">Add Country</a>
-	<table id="tblCountry">
+	<a class="alignment" href="countrycreate.html">Add Country</a>
+	<table align="center" border="1px" id="tblCountry">
 		<tr>
 			<th>Code</th>
 			<th>Name</th>

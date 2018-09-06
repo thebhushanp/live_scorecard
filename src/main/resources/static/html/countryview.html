@@ -2,6 +2,43 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
+<style>
+h1 {
+text-align:right;
+margin-top: 2%;
+		margin-right:1%;
+		color:#1491bd;
+		 text-shadow: 2px 1px;
+}
+table {
+background-color:#C0C0C0;
+border-radius: 15px; 
+width:30%;
+	margin-top:8%;
+	text-align:center;
+	 border-collapse: collapse;
+	 
+}
+td {
+
+padding:15px;
+}
+.backLink {
+text-decoration:none;
+background-color:#1491bd;
+color:white;
+text-align:center;
+ display: inline-block;
+       margin-top:3%;
+       margin-right:1%;
+		float:right;
+    padding: 11px 25px;
+    border-radius:9px;
+
+}
+
+
+</style>
 <script type="text/javascript">
 	window.onload = function() {
 		var urlParams = new URLSearchParams(location.search);
@@ -48,9 +85,18 @@
 	</div>
 	<form>
 		<h1>Country:View</h1>
-		<label>Country Code: </label> <label id="lblCode"></label> <br> <br>
-		<label>Country Name: </label> <label id="lblName"></label> <br> <br>
-		<a href="/html/countries.html">Back</a>
+		<table  align="center">
+			<tr>
+				<td>Country Code:</td>
+				<td id="lblCode"></td>
+			</tr>
+			<tr>
+				<td>Country Name:</td>
+				<td id="lblName"></td>
+			</tr>
+			</table>
+		
+		<a class="backLink" href="/html/countries.html">Back</a>
 	</form>
 </body>
 </html>

@@ -1,0 +1,46 @@
+<html>
+<head>
+<script>
+function save() {
+    var sbTeamType = document.getElementById("teamtype");
+    var teamTypeId = sbTeamType.options[sbTeamType.selectedIndex].value;
+    alert('team type:'+teamTypeId); 
+    var sbWK = document.getElementById("wicketkepper");
+    var wkId = sbWK.options[sbWK.selectedIndex].value;
+    alert('wicket keeper:'+wkId);   
+    var sbCaptain = document.getElementById("captain");
+    var captainId = sbCaptain.options[sbCaptain.selectedIndex].value;
+    alert('captain id:'+captainId);
+}
+</script>
+<body>
+<h1>Team:Create</h1>
+	<table>
+		<tr>
+			<td><label>Team Name: </label></td>
+			<td><input id="txtTeamName" type="text" value="" name="tname"
+				placeholder="Enter the Team name here"></td>
+		</tr>
+		<tr>
+			<td><label>Team Type: </label></td>
+			<td><select id="teamtype" name="teamtype">
+
+			</select></td>
+		</tr>
+		<tr>
+			<td><label>Captain: </label></td>
+			<td><select id="captain" name="captain">
+			</select></td>
+		</tr>
+		<tr>
+			<td><label>Wicketkepper: </label></td>
+			<td><select id="wicketkepper" name="wicketkepper">
+			</select></td>
+		</tr>
+		<tr>
+			<td><button onclick="save()">Save</button></td>
+		</tr>
+	</table>
+
+	</body>
+	</html>

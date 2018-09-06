@@ -25,17 +25,16 @@ public class MatchRepository implements RowMapper<Match> {
 	private JdbcTemplate jdbcTemplate;
 
 	public Match save(Match match) {
-		String sql = "INSERT INTO match (matchtype,vengue,starttime,tosswinner,batfirst) values (?,?,?,?,?)";
+		String sql = "INSERT INTO match (matchtype,vengue,team1,team2) values (?,?,?,?)";
 		KeyHolder holder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1, match.getMatchType());
+				ps.setInt(1, match.getMatchtype());
 				ps.setString(2, match.getVengue());
-				ps.setDate(3, match.getStartDate());
-				ps.setInt(4, match.getTossWinner());
-				ps.setInt(5, match.getBatFirst());
+				ps.setInt(3, match.getTeam1());
+				ps.setInt(4, match.getTeam2());
 				return ps;
 			}
 		}, holder);
@@ -44,9 +43,8 @@ public class MatchRepository implements RowMapper<Match> {
 	}
 
 	public void update(Match match) {
-		String sql = "Update match set matchtype = '" + match.getMatchType() + "', vengue = '" + match.getVengue()
-		+ "', startdate = '"+ match.getStartDate() +"', tosswinner = '" + match.getTossWinner() + "',batfirst = '"
-		+ match.getBatFirst() + "where id =  "+match.getId();
+		String sql = "Update match set matchtype = '" + match.getMatchtype() + "', vengue = '" + match.getVengue()
+		+ "', team1 = '" + match.getTeam1() + "',team2 = '" + match.getTeam2() + "' where id =  " + match.getId();
 		System.out.println("executing SQL = " + sql);
 		jdbcTemplate.update(sql);
 	}
@@ -74,11 +72,10 @@ public class MatchRepository implements RowMapper<Match> {
 	public Match mapRow(ResultSet rs, int rowId) throws SQLException {
 		Match match = new Match();
 		match.setId(rs.getInt("id"));
-		match.setMatchType(rs.getInt("matchtype"));
+		match.setMatchtype(rs.getInt("matchtype"));
 		match.setVengue(rs.getString("vengue"));
-		match.setStartDate(rs.getDate("startdate"));
-		match.setTossWinner(rs.getInt("tosswinner"));
-		match.setBatFirst(rs.getInt("batfirst"));
+		match.setTeam1(rs.getInt("team1"));
+		match.setTeam2(rs.getInt("team2"));
 		return match;
 	}
 }

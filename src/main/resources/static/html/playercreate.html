@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+h1 {
+text-align:right;
+margin-top: 2%;
+		margin-right:1%;
+		color:#1491bd;
+		 text-shadow: 2px 1px;
+}
+table {
+border: 1px solid black;
+width:30%;
+border-color:#A9A9A9;
+	margin-top:8%;
+	text-align:center;
+	 border-collapse: collapse;
+	 
+}
+td {
+
+padding:15px;
+}
+#save {
+float:right;
+background-color:#1491bd;
+color:white;
+border-radius:5px;
+ margin-top:3%;
+       margin-right:2%;
+       height:32px;
+}
+</style>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
 	function save() {
@@ -41,7 +72,7 @@
 		</div>
 	</div>
 	<h1>Player:Create</h1>
-	<table>
+	<table align="center">
 		<tr>
 			<td><label>Player Name: </label></td>
 			<td><input id="txtName" type="text" value="" name="name"
@@ -52,10 +83,10 @@
 			<td><input id="txtAge" type="text" value="" name="age"
 				placeholder="Enter the player age here"></td>
 		</tr>
-		<tr>
-			<td><button onclick="save()">Save</button></td>
-		</tr>
-	</table>
+		</table>
+			
+			<button id="save" onclick="save()">Save</button>
+	
 </body>
 </html>
 

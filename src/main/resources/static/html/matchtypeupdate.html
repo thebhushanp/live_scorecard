@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+h1 {
+text-align:right;
+margin-top: 2%;
+		margin-right:1%;
+		color:#1491bd;
+		 text-shadow: 2px 1px;
+}
+table {
+border: 1px solid black;
+width:40%;
+border-color:#A9A9A9;
+	margin-top:8%;
+	text-align:center;
+	 border-collapse: collapse;
+	 
+}
+td {
+
+padding:25px;
+}
+#update {
+float:right;
+background-color:#1491bd;
+color:white;
+border-radius:5px;
+ margin-top:3%;
+       margin-right:2%;
+       height:32px;
+}
+
+</style>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
 	window.onload = function() {
@@ -66,11 +98,15 @@
 		</div>
 	</div>
 	<form>
-		<h1>Match Type:Update</h1>
-		<label>Match Type Name:</label> <input id="txtName" type="text"
-			value="" name="name"> <br> <br> <input
-			onclick="onUpdate()" type="button" value="Update">
-
+	<h1>Match Type:Update</h1>
+		<table align="center">
+			<tr>
+				<td>Match Type Name:</td>
+				<td><input id="txtName" type="text"
+			value="" name="name"></td>
+			</tr>
+			</table>
+		<input id="update" onclick="onUpdate()" type="button" value="Update">
 	</form>
 </body>
 </html>

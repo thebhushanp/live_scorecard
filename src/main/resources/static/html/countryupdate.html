@@ -2,6 +2,38 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
+<style>
+h1 {
+text-align:right;
+margin-top: 2%;
+		margin-right:1%;
+		color:#1491bd;
+		 text-shadow: 2px 1px;
+}
+table {
+border: 1px solid black;
+width:30%;
+border-color:#A9A9A9;
+	margin-top:8%;
+	text-align:center;
+	 border-collapse: collapse;
+	 
+}
+td {
+
+padding:15px;
+}
+#update {
+float:right;
+background-color:#1491bd;
+color:white;
+border-radius:5px;
+ margin-top:3%;
+       margin-right:2%;
+       height:32px;
+}
+
+</style>
 <script type="text/javascript">
 	window.onload = function() {
 		var urlParams = new URLSearchParams(location.search);
@@ -69,11 +101,17 @@
 	</div>
 	<form>
 		<h1>Country:Update</h1>
-		<label>Country Code: </label> 
-		<input id="txtCode" type="text" name="code"> <br> <br> 
-		<label>Country Name:</label> 
-		<input id="txtName" type="text" value="" name="name"> <br> <br>
-		<input onclick="onUpdate()" type="button" value="Update">
+		<table align="center">
+			<tr>
+				<td>Country Code:</td>
+				<td><input id="txtCode" type="text" name="code"></td>
+			</tr>
+			<tr>
+				<td>Country Name:</td>
+				<td><input id="txtName" type="text" value="" name="name"></td>
+			</tr>
+			</table>
+		<input id="update" onclick="onUpdate()" type="button" value="Update">
 		
 	</form>
 </body>

@@ -3,6 +3,46 @@
 
 <head>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
+<style>
+
+table {
+	width :80%;
+	margin-top:12%;
+	text-align:center;
+	 border-collapse: collapse;
+	
+}
+.alignment {
+text-align:center;
+	float:right;
+ background-color: #5EAFEB;	
+ color: white;
+ display: inline-block;
+ text-decoration: none;
+        margin-top: 3%;
+		margin-right:1%;
+    padding: 11px 25px;
+    border-radius:9px;
+}
+th {
+background-color: #2C2C2C;
+color:white;
+}
+table  a {
+ text-decoration:none;
+background-color:#2C2C2C;
+color:white;
+padding:1px;
+text-align:center;
+ margin-right:4px;
+  }
+  button {
+  height: 26px;
+background-color:#2C2C2C;
+color:white;
+  
+  }
+</style>
 <script>
 	window.onload = function() {
 		var xmlhttp = new XMLHttpRequest();
@@ -96,8 +136,8 @@
 			</div>
 		</div>
 	</div>
-	<a href="matchtypecreate.html">Add Match Type</a>
-	<table id="tblMatchType">
+	<a class="alignment" href="matchtypecreate.html">Add Match Type</a>
+	<table align="center" border="1px" id="tblMatchType">
 		<tr>
 			<th>Name</th>
 			<th>Action</th>

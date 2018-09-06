@@ -1,15 +1,11 @@
 package com.scorecard.models;
 
-import java.sql.Date;
-
 public class Match {
 	private Integer id;
 	private Integer matchtype;
 	private String vengue;
-	private Date startdate;
-	private Integer tosswinner;
-	private Integer batfirst;
-
+	private Integer team1;
+	private Integer team2;
 
 	public Integer getId() {
 		return id;
@@ -19,12 +15,6 @@ public class Match {
 		this.id = id;
 	}
 
-	public Integer getMatchType() {
-		return matchtype;
-	}
-	public void setMatchType(Integer matchtype) {
-		this.matchtype = matchtype;
-	}
 	public String getVengue() {
 		return vengue;
 	}
@@ -32,26 +22,29 @@ public class Match {
 	public void setVengue(String vengue) {
 		this.vengue = vengue;
 	}
-	public Date getStartDate() {
-		return startdate;
+
+	public Integer getMatchtype() {
+		return matchtype;
 	}
 
-	public void setStartDate(Date startdate) {
-		this.startdate = startdate;
-	}
-	public Integer getTossWinner() {
-		return tosswinner;
+	public void setMatchtype(Integer matchtype) {
+		this.matchtype = matchtype;
 	}
 
-	public void setTossWinner(Integer tosswinner) {
-		this.tosswinner = tosswinner;
-	}
-	public Integer getBatFirst() {
-		return batfirst;
+	public Integer getTeam1() {
+		return team1;
 	}
 
-	public void setBatFirst(Integer batfirst) {
-		this.batfirst = batfirst;
+	public void setTeam1(Integer team1) {
+		this.team1 = team1;
+	}
+
+	public Integer getTeam2() {
+		return team2;
+	}
+
+	public void setTeam2(Integer team2) {
+		this.team2 = team2;
 	}
 
 }

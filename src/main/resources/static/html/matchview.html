@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="/css/nav.css">
 <style>
 h1 {
 text-align:right;
@@ -20,7 +21,7 @@ width:30%;
 }
 td {
 
-padding:25px;
+padding:15px;
 }
 .backLink {
 text-decoration:none;
@@ -38,27 +39,35 @@ text-align:center;
 
 
 </style>
-<link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
 	window.onload = function() {
 		var urlParams = new URLSearchParams(location.search);
 		var id = urlParams.get('id');
 
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/teamtype/" + id;
+		var url = "/api/match/" + id;
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				var teamtypeData = JSON.parse(this.responseText);
-				renderTeamType(teamtypeData);
+				var matchData = JSON.parse(this.responseText);
+				renderMatch(matchData);
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
 
-	function renderTeamType(teamtype) {
-		var lblName = document.getElementById("lblName");
-		lblName.innerHTML = teamtype.name;
+	function renderMatch(match) {
+		var lblMatchType = document.getElementById("lblMatchType");
+		lblMatchType.innerHTML = match.matchtype;
+
+		var lblVengue = document.getElementById("lblVengue");
+		lblVengue.innerHTML = match.vengue;
+		
+		var lblTeam1 = document.getElementById("lblTeam1");
+		lblTeam1.innerHTML = match.team1;
+		
+		var lblTeam2 = document.getElementById("lblTeam2");
+		lblTeam2.innerHTML = match.team2;
 	}
 </script>
 </head>
@@ -75,22 +84,34 @@ text-align:center;
 					<a href="/html/countries.html">Country</a> <a
 						href="/html/players.html">Players</a> <a href="/html/teamtypes.html">Team
 						type</a> <a href="/html/matchtypes.html">Match type</a>
-				<a href="/html/teams.html">Teams</a>
+					<a href="/html/teams.html">Teams</a>
+						<a href="/html/Matches.html">Matches</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	<form>
-	<h1>Team Type:View</h1>
+		<h1>Match:View</h1>
 		<table  align="center">
 			<tr>
-				<td>Team Type Name:</td>
-				<td id="lblName"></td>
+				<td>Match Type:</td>
+				<td id="lblMatchType"></td>
+			</tr>
+			<tr>
+				<td>Vengue:</td>
+				<td id="lblVengue"></td>
+			</tr>
+			<tr>
+				<td>Team1:</td>
+				<td id="lblTeam1"></td>
+			</tr>
+			<tr>
+				<td>Team2:</td>
+				<td id="lblTeam2"></td>
 			</tr>
 			</table>
 		
-		<a class="backLink" href="/html/teamtypes.html">Back</a>
-	
+		<a class="backLink" href="/html/matches.html">Back</a>
 	</form>
 </body>
 </html>

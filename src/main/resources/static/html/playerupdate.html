@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+h1 {
+text-align:right;
+margin-top: 2%;
+		margin-right:1%;
+		color:#1491bd;
+		 text-shadow: 2px 1px;
+}
+table {
+border: 1px solid black;
+width:30%;
+border-color:#A9A9A9;
+	margin-top:8%;
+	text-align:center;
+	 border-collapse: collapse;
+	 
+}
+td {
+
+padding:15px;
+}
+#update {
+float:right;
+background-color:#1491bd;
+color:white;
+border-radius:5px;
+ margin-top:3%;
+       margin-right:2%;
+       height:32px;
+}
+
+</style>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
 	window.onload = function() {
@@ -71,11 +103,21 @@
 			</div>
 		</div>
 	</div>
-		<h1>Player:Update</h1>
-		<label>Player Name: </label> <input id="txtName" type="text"
-			name="name"> <br> <br> <label>Player Age:</label><input
-			id="txtAge" type="text" value="" name="age"> <br>
-		<br> <input onclick="onUpdate()" type="button" value="Update">
+	<h1>Player:Update</h1>
+		<table align="center">
+			<tr>
+				<td>Player Name:</td>
+				<td><input id="txtName" type="text"
+			name="name"></td>
+			</tr>
+			<tr>
+				<td>Player Age:</td>
+				<td><input
+			id="txtAge" type="text" value="" name="age"></td>
+			</tr>
+			</table>
+		<input id="update" onclick="onUpdate()" type="button" value="Update">
+
 
 	</form>
 </body>
