@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Live Score</title>
+<script>
+	window.onload = function() {
+		//var dataString = fetchDummyData();
+		//var dataJson = JSON.parse(dataString);
+		//renderScore(dataJson);
+		var xmlhttp = new XMLHttpRequest();
+		var url = "../api/score/pull?matchId=1&teamId=8";
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				var score = JSON.parse(this.responseText);
+				renderScore(score);
+			}
+		};
+		xmlhttp.open("GET", url, true);
+		xmlhttp.send();
+		
+	}
+
+	function fetchDummyData() {
+		return '[{"id":4,"runs":25,"balls":10,"isOut":false,"player":{"id":null,"age":null,"name":"Sachin T"},"match":null},{"id":5,"runs":20,"balls":40,"isOut":false,"player":{"id":null,"age":null,"name":"Saurabh G"},"match":null}]';
+	}
+
+	function renderScore(data) {
+		var tblScore = document.getElementById("tblScore");
+		var txtTotalScore = document.getElementById("txtTotalScore");
+		txtTotalScore.value=0;
+		for (var index = 0; index < data.length; index++) {
+			var score = data[index];
+			txtTotalScore.value = Number(txtTotalScore.value) + score.runs;
+			var tr = document.createElement("tr");
+
+			var tdName = document.createElement("td");
+			var tdRuns = document.createElement("td");
+			var tdBalls = document.createElement("td");
+
+			var txtName = document.createTextNode(score.player.name);
+			var txtBalls = document.createTextNode(score.balls);
+			var txtRuns = document.createTextNode(score.runs);
+
+			tdName.appendChild(txtName);
+			tdRuns.appendChild(txtRuns);
+			tdBalls.appendChild(txtBalls);
+			
+			tr.appendChild(tdName);
+			tr.appendChild(tdRuns);
+			tr.appendChild(tdBalls);
+			tblScore.appendChild(tr);
+		}
+
+	}
+</script>
+</head>
+
+<body>
+	<table id="tblScore">
+		<tr>
+			<th>Batsman</th>
+			<th>Runs</th>
+			<th>Balls</th>
+		</tr>
+	</table>
+	<input id="txtTotalScore" type="text" disabled="disabled" ></input>
+</body>
+
+</html>

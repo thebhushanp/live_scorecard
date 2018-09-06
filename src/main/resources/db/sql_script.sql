@@ -31,3 +31,16 @@ create table match(id SERIAL primary key,
 	starttime date not null,
 	tosswinner integer REFERENCES team(id),
 	batfirst integer REFERENCES team(id));
+
+create table score(id serial primary key,
+	runs integer not null, 
+	balls integer not null,
+	is_out boolean not null,
+	player_id integer references player(id),
+	match_id integer references match(id)
+);
+
+create table team_player_mapping(team_id integer REFERENCES team(id),
+	player_id integer REFERENCES player(id));
+
+-- Need to add team1 and team2 in match table
