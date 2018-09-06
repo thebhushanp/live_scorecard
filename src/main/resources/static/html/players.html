@@ -1,6 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+
+table {
+	width :80%;
+	margin-top:12%;
+	text-align:center;
+	 border-collapse: collapse;
+	
+}
+.alignment {
+text-align:center;
+	float:right;
+ background-color: #5EAFEB;	
+ color: white;
+ display: inline-block;
+ text-decoration: none;
+        margin-top: 3%;
+		margin-right:1%;
+    padding: 11px 25px;
+    border-radius:9px;
+}
+th {
+background-color: #2C2C2C;
+color:white;
+}
+table  a {
+ text-decoration:none;
+background-color:#2C2C2C;
+color:white;
+padding:1px;
+text-align:center;
+ margin-right:4px;
+  }
+  button {
+  height: 26px;
+background-color:#2C2C2C;
+color:white;
+  
+  }
+</style>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script>
 	window.onload = function() {
@@ -98,8 +138,9 @@
 			</div>
 		</div>
 	</div>
-	<a href="playercreate.html">Add Player</a>
-	<table id="tblPlayer">
+	<a class="alignment" href="playercreate.html">Add Player</a>
+
+	<table align="center" border="1px" id="tblPlayer">
 		<tr>
 			<th>Name</th>
 			<th>Age</th>
