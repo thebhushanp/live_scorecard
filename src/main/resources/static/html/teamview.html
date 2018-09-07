@@ -45,30 +45,29 @@ text-align:center;
 		var id = urlParams.get('id');
 
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/match/" + id;
+		var url = "/api/team/" + id;
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				var matchData = JSON.parse(this.responseText);
-				renderMatch(matchData);
+				var teamData = JSON.parse(this.responseText);
+				renderTeam(teamData);
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
 
-	function renderMatch(match) {
-		var lblMatchType = document.getElementById("lblMatchType");
-		lblMatchType.innerHTML = match.matchtype;
+	function renderTeam(team) {
+		var lblTeamName = document.getElementById("lblTeamName");
+		lblTeamName.innerHTML = team.teamname;
 
-		var lblVengue = document.getElementById("lblVengue");
-		lblVengue.innerHTML = match.vengue;
+		var lblTeamType = document.getElementById("lblTeamType");
+		lblTeamType.innerHTML = team.teamtype.name;
 		
-		var lblTeam1 = document.getElementById("lblTeam1");
-		lblTeam1.innerHTML = match.team1;
+		var lblCaptain = document.getElementById("lblCaptain");
+		lblCaptain.innerHTML = team.captain.name;
 		
-		var lblTeam2 = document.getElementById("lblTeam2");
-		lblTeam2.innerHTML = match.team2;
 	}
+	
 </script>
 </head>
 <body>
@@ -86,7 +85,7 @@ text-align:center;
 						type</a> <a href="/html/matchtypes.html">Match type</a>
 					<a href="/html/teams.html">Teams</a>
 						<a href="/html/Matches.html">Matches</a>
-
+					
 				</div>
 			</div>
 		</div>
@@ -95,24 +94,21 @@ text-align:center;
 		<h1>Match:View</h1>
 		<table  align="center">
 			<tr>
-				<td>Match Type:</td>
-				<td id="lblMatchType"></td>
+				<td>Team Name:</td>
+				<td id="lblTeamName"></td>
 			</tr>
 			<tr>
-				<td>Vengue:</td>
-				<td id="lblVengue"></td>
+				<td>Team Type:</td>
+				<td id="lblTeamType"></td>
 			</tr>
 			<tr>
-				<td>Team1:</td>
-				<td id="lblTeam1"></td>
+				<td>Captain:</td>
+				<td id="lblCaptain"></td>
 			</tr>
-			<tr>
-				<td>Team2:</td>
-				<td id="lblTeam2"></td>
-			</tr>
+			
 			</table>
 		
-		<a class="backLink" href="/html/matches.html">Back</a>
+		<a class="backLink" href="/html/teams.html">Back</a>
 	</form>
 </body>
 </html>

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -44,7 +45,8 @@ public class TeamRepository implements RowMapper<Team> {
 	}
 
 	public void update(Team team) {
-		String sql = "Update team set teamtype = '" + team.getTeamtype() + "', captain = '" + team.getCaptain() + "',wicketkepper = '" + team.getWicketkepper() + "'  where id = "
+		String sql = "Update team set teamtype = '" + team.getTeamtype().getId() + "', captain = '"
+				+ team.getCaptain().getId() + "',wicketkepper = '" + team.getWicketkepper().getId() + "'  where id = "
 				+ team.getId();
 		System.out.println("executing SQL = " + sql);
 		jdbcTemplate.update(sql);
@@ -87,5 +89,18 @@ public class TeamRepository implements RowMapper<Team> {
 		team.setCaptain(cap);
 		team.setWicketkepper(wk);
 		return team;
+	}
+
+	public void addPlayerToTeam(Integer playerId, Integer teamId) {
+		String sql = "Insert into team_player_mapping values (" + teamId + "," + playerId + ")";
+		System.out.println("executing SQL = " + sql);
+		jdbcTemplate.update(sql);
+	}
+
+	public List<Player> getPlayers(Integer teamId) {
+		String sql = "select * from player where id in ( select player_id from team_player_mapping  where team_id ="
+				+ teamId + ");";
+		System.out.println("executing SQL = " + sql);
+		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Player>(Player.class));
 	}
 }

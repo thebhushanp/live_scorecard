@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.scorecard.models.Player;
 import com.scorecard.models.Team;
 import com.scorecard.repositories.TeamRepository;
 
@@ -32,5 +33,13 @@ public class TeamService {
 
 	public List<Team> findAll() {
 		return tRepository.findAll();
+	}
+
+	public void addPlayerToTeam(Integer playerId, Integer teamId) {
+		tRepository.addPlayerToTeam(playerId, teamId);
+	}
+
+	public List<Player> getPlayers(Integer teamId) {
+		return tRepository.getPlayers(teamId);
 	}
 }
