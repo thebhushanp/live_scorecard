@@ -35,8 +35,6 @@ td {
 </style>
 <link rel="stylesheet" type="text/css" href="/css/nav.css">
 <script type="text/javascript">
-	var teamData;
-	var teamPlayers = {};
 	window.onload = function() {
 		var urlParams = new URLSearchParams(location.search);
 		var id = urlParams.get('id');
@@ -45,7 +43,7 @@ td {
 
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				teamData = JSON.parse(this.responseText);
+				var teamData = JSON.parse(this.responseText);
 				fetchTeamType(teamData.teamtype);
 				fetchCaptain(teamData.captain);
 				fetchWicketkepper(teamData.wicketkepper);
@@ -55,28 +53,55 @@ td {
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 
-		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/players";
-		xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var dataPlayers = JSON.parse(this.responseText);
-				populatePlayers(dataPlayers, teamData);
-			}
-		};
-		xmlhttp.open("GET", url, true);
-		xmlhttp.send();
+		// 		var xmlhttp = new XMLHttpRequest();
+		// 		var url = "/api/players";
+		// 		xmlhttp.onreadystatechange = function() {
+		// 			if (this.readyState == 4 && this.status == 200) {
+		// 				var dataPlayers = JSON.parse(this.responseText);
+		// 				populatePlayers(dataPlayers, teamData);
+		// 			}
+		// 		};
+		// 		xmlhttp.open("GET", url, true);
+		// 		xmlhttp.send();
 
 		xmlhttp = new XMLHttpRequest();
 		var url = "/api/team/getplayers?teamid=" + id;
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				teamPlayers = JSON.parse(this.responseText);
-			} else {
-				alert('error while fetching data')
+				var teamPlayers = JSON.parse(this.responseText);
+				renderTeamPlayers(teamPlayers);
+				
+				xmlhttp1 = new XMLHttpRequest();
+				var url = "/api/players";
+
+				xmlhttp1.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						var teamData = JSON.parse(this.responseText);
+						test(teamData, teamPlayers);
+					}
+				};
+				xmlhttp1.open("GET", url, true);
+				xmlhttp1.send();
+
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
+	}
+
+	function test(allPlayers, teamPlayers) {
+		allPlayers = allPlayers.filter( ( el ) => !teamPlayers.includes( el ) );
+		populatePlayers(allPlayers);
+	}
+	
+	function renderTeamPlayers(teamPlayers) {
+		var lbl = document.getElementById('lblPlayers');
+		for (var index = 0; index < teamPlayers.length; index++) {
+			var tp = teamPlayers[index];
+			lbl.innerHTML = lbl.innerHTML +' '+ tp.name;
+
+		}
+
 	}
 
 	function fetchTeamType(teamtype) {
@@ -199,30 +224,28 @@ td {
 		xmlhttp.send(jsonString);
 	}
 
-	function populatePlayers(dataPlayers, teamData) {
+	function populatePlayers(dataPlayers) {
 		var sel = document.getElementById('sbAddPlayer');
 
 		for (var index = 0; index < dataPlayers.length; index++) {
 			var opt = dataPlayers[index];
-			if (!isContains(opt)) {
 				var el = document.createElement('option');
 				el.text = opt.name;
 				el.value = opt.id;
 				sel.appendChild(el);
-			}
 		}
 	}
-	
+/* 
 	function isContains(opt) {
-		for (var index = 0; index < window.teamPlayers.length; index++) {
+		for (var index = 0; index < this.teamPlayers.length; index++) {
 			var player = window.teamPlayers[index];
-			if(player.id == opt.id) {
+			if (player.id == opt.id) {
 				return true;
 			}
 		}
 		return false;
-	}
-	
+	} */
+
 	function addPlayer() {
 		var sel = document.getElementById('sbAddPlayer');
 		var urlParams = new URLSearchParams(location.search);
@@ -285,6 +308,10 @@ td {
 				<td><label>Wicketkepper: </label></td>
 				<td><select id="wicketkepper" name="wicketkepper">
 				</select></td>
+			</tr>
+			<tr>
+				<td><label>Players in this team</label></td>
+				<td><label id="lblPlayers"></label>
 			</tr>
 			<tr>
 				<td><select id="sbAddPlayer" /></td>

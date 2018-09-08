@@ -1,13 +1,13 @@
 <html>
 <head>
-<title>Live Score</title>
+<title>Live Score : AJAX</title>
 <script>
 	window.onload = function() {
 		//var dataString = fetchDummyData();
 		//var dataJson = JSON.parse(dataString);
 		//renderScore(dataJson);
 		var xmlhttp = new XMLHttpRequest();
-		var url = "../api/score/pull?matchId=1&teamId=8";
+		var url = "../api/score/pull?matchId=2&teamId=2";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				var score = JSON.parse(this.responseText);
@@ -16,7 +16,11 @@
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
-		
+
+		function refresh() {
+			window.location.reload(true);
+		}
+		setTimeout(refresh, 10000);
 	}
 
 	function fetchDummyData() {
@@ -26,7 +30,7 @@
 	function renderScore(data) {
 		var tblScore = document.getElementById("tblScore");
 		var txtTotalScore = document.getElementById("txtTotalScore");
-		txtTotalScore.value=0;
+		txtTotalScore.value = 0;
 		for (var index = 0; index < data.length; index++) {
 			var score = data[index];
 			txtTotalScore.value = Number(txtTotalScore.value) + score.runs;
@@ -43,13 +47,12 @@
 			tdName.appendChild(txtName);
 			tdRuns.appendChild(txtRuns);
 			tdBalls.appendChild(txtBalls);
-			
+
 			tr.appendChild(tdName);
 			tr.appendChild(tdRuns);
 			tr.appendChild(tdBalls);
 			tblScore.appendChild(tr);
 		}
-
 	}
 </script>
 </head>
@@ -62,7 +65,7 @@
 			<th>Balls</th>
 		</tr>
 	</table>
-	<input id="txtTotalScore" type="text" disabled="disabled" ></input>
+	<input id="txtTotalScore" type="text" disabled="disabled"></input>
 </body>
 
 </html>

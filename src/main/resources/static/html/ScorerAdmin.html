@@ -2,407 +2,373 @@
 <html>
 
 <head>
-    <style>
-        body {
-            color: white;
-            margin: 0px;
-            padding: 0px;
-        }
-        
-        h1 {
-            background-color: #2C2C2C;
-        }
-        
-        table,
-        th {
-            border: 1px solid black;
-        }
-        
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        
-        td {
-            text-align: center;
-            height: 35px;
-        }
-        
-        th {
-            background-color: #2C2C2C;
-        }
-        
-        .dark {
-            background-color: #0C4F7F;
-        }
-        
-        .light {
-            background-color: #125D8F;
-        }
-        
-        h2 {
-            background-color: #082B47;
-            text-align: right;
-        }
-        
-        #match {
-            background-color: #9b9a9a;
-            width: 30%;
-            text-align: center;
-        }
-        
-        #runs {
-            width: 100%;
-        }
-        
-        #no {
-            width: 15%;
-        }
-        
-        #batsmen {
-            width: 25%;
-        }
-        
-        #truns {
-            width: 20%;
-        }
-        
- #btn {
-	 background-image:url(/img/ball.jpg);
-width: 30px;
-height: 30px;
-color:white;
-background-size: 31px 31px;
-border-radius: 50%;
- border: none;
-background-repeat: no-repeat;
-}
-#txtTotal1,#txtTotal2,#txtTotal3,#txtTotal4,#txtTotal5,#txtTotal6,#txtTotal7,
-#txtTotal8,#txtTotal9,#txtTotal10,#txtTotal11 {
-	text-align:center;
+<style>
+body {
+	color: white;
+	margin: 0px;
+	padding: 0px;
 }
 
-    </style>
-    <script>
-    window.onload = function() {
+h1 {
+	background-color: #2C2C2C;
+}
+
+table, th {
+	border: 1px solid black;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td {
+	text-align: center;
+	height: 35px;
+}
+
+th {
+	background-color: #2C2C2C;
+}
+
+.dark {
+	background-color: #0C4F7F;
+}
+
+.light {
+	background-color: #125D8F;
+}
+
+h2 {
+	background-color: #082B47;
+	text-align: right;
+}
+
+#match {
+	background-color: #9b9a9a;
+	width: 30%;
+	text-align: center;
+}
+
+#runs {
+	width: 100%;
+}
+
+#no {
+	width: 15%;
+}
+
+#batsmen {
+	width: 25%;
+}
+
+#truns {
+	width: 20%;
+}
+
+button {
+	background-image: url(/img/ball.jpg);
+	width: 30px;
+	height: 30px;
+	color: white;
+	background-size: 31px 31px;
+	border-radius: 50%;
+	border: none;
+	background-repeat: no-repeat;
+}
+
+#txtTotal1, #txtTotal2, #txtTotal3, #txtTotal4, #txtTotal5, #txtTotal6,
+	#txtTotal7, #txtTotal8, #txtTotal9, #txtTotal10, #txtTotal11 {
+	text-align: center;
+}
+</style>
+<script>
+	window.onload = function() {
 		var xmlhttp = new XMLHttpRequest();
-		var url = "/api/ScorerAdmin";
+		var url = "/api/score/pull?matchId=2&teamId=2";
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				var event = JSON.parse(this.responseText);
-				incr(event);
+				var matches = JSON.parse(this.responseText);
+				populateScore(matches);
 			}
 		};
 		xmlhttp.open("GET", url, true);
 		xmlhttp.send();
 	}
-    function incr(event) {
-		var tblMatch = document.getElementById("match");
-		// iterating the countries
-		for (var index = 0; index < event.length; index++) {
-			var countryId = countryData[index].id;
-			var tr = document.createElement("tr");
-			var tdCode = document.createElement("td");
-			var tdName = document.createElement("td");
-			var tdAction = document.createElement("td");
-			var txtCode = document.createTextNode(countryData[index].code);
-			var txtName = document.createTextNode(countryData[index].name);
-			var linkView = document.createElement("a");
-			linkView.setAttribute('href', "/html/countryview.html?id="
-					+ countryId);
-			linkView.innerHTML = "View";
-			var linkEdit = document.createElement("a");
-			linkEdit.setAttribute('href', "/html/countryupdate.html?id="
-					+ countryId);
-			linkEdit.innerHTML = "Edit";
-			var btnDelete = document.createElement("button");
-			btnDelete.setAttribute('pk', countryId);
-			btnDelete.addEventListener("click", deleteCountry, false)
-			var btnDelText = document.createTextNode("Delete");
-			btnDelete.appendChild(btnDelText);
-			tdAction.appendChild(linkView);
-			tdAction.appendChild(linkEdit);
-			tdAction.appendChild(btnDelete);
-			tdCode.appendChild(txtCode);
-			tdName.appendChild(txtName);
-			tr.appendChild(tdCode);
-			tr.appendChild(tdName);
-			tr.appendChild(tdAction);
-			tblCountry.appendChild(tr);
-			//alert(countryData[index].name);
+
+	function populateScore(scores) {
+		var tbl = document.getElementById('runs');
+		for (var index = 0; index < scores.length; index++) {
+			var data = scores[index];
+			addRow(tbl, index, data);
 		}
 	}
-    function incrPlayer1(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal1');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
 
-	}
-    function incrPlayer2(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal2');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
+	function addRow(table, index, data) {
+		var rowCount = table.rows.length;
+		var row = table.insertRow(rowCount);
+		if (index % 2 == 0) {
+			row.setAttribute('class', 'light');
+		} else {
+			row.setAttribute('class', 'dark');
+		}
+		var cell1 = row.insertCell(0);
+		var element1 = document.createElement("td");
+		element1.innerHTML = index + 1;
+		cell1.appendChild(element1);
 
-	}
-    function incrPlayer3(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal3');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
+		var cell2 = row.insertCell(1);
+		var element2 = document.createElement("td");
+		element2.innerHTML = data.player.name;
+		cell2.appendChild(element2);
 
-	}
-    function incrPlayer4(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal4');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
+		var cell3 = row.insertCell(2);
+		var element3 = document.createElement("td");
 
-	}
-    function incrPlayer5(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal5');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
+		var btn1 = document.createElement("button");
+		btn1.innerHTML = 0;
+		btn1.onclick = incr;
+		var btn2 = document.createElement("button");
+		btn2.innerHTML = 1;
+		btn2.onclick = incr;
+		var btn3 = document.createElement("button");
+		btn3.innerHTML = 2;
+		btn3.onclick = incr;
+		var btn4 = document.createElement("button");
+		btn4.innerHTML = 3;
+		btn4.onclick = incr;
+		var btn5 = document.createElement("button");
+		btn5.innerHTML = 4;
+		btn5.onclick = incr;
+		var btn6 = document.createElement("button");
+		btn6.innerHTML = 5;
+		btn6.onclick = incr;
+		var btn7 = document.createElement("button");
+		btn7.innerHTML = 6;
+		btn7.onclick = incr;
 
-	}
-    function incrPlayer6(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal6');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
+		element3.appendChild(btn1);
+		element3.appendChild(btn2);
+		element3.appendChild(btn3);
+		element3.appendChild(btn4);
+		element3.appendChild(btn5);
+		element3.appendChild(btn6);
+		element3.appendChild(btn7);
+		cell3.appendChild(element3);
 
-	}
-    function incrPlayer7(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal7');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
+		var cell4 = row.insertCell(3);
+		var element4 = document.createElement("td");
+		var input1 = document.createElement("input");
+		input1.value = data.runs;
+		input1.disabled = true;
+		input1.type = "text";
+		input1.setAttribute('pid', data.player.id);
+		element4.appendChild(input1);
+		cell4.appendChild(element4);
 
+		row.appendChild(cell1);
+		row.appendChild(cell2);
+		row.appendChild(cell3);
+		row.appendChild(cell4);
 	}
-    function incrPlayer8(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal8');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
 
+	function incr(event) {
+		var target = event.target;
+		var parent = target.parentElement.parentElement;
+		var txt = parent.nextSibling.children[0].firstChild;
+		var playerId = txt.getAttribute('pid');
+		var xmlhttp = new XMLHttpRequest();
+		var url = "/api/score/addruns?matchId=2&playerId="+playerId+"&run="
+				+ target.innerHTML;
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				txt.value = parseInt(txt.value, 10)
+						+ parseInt(target.innerHTML, 10);
+			}
+		};
+		xmlhttp.open("PUT", url, true);
+		xmlhttp.send();
 	}
-    function incrPlayer9(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal9');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
-
-	}
-    function incrPlayer10(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal10');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
-
-	}
-    function incrPlayer11(event) {
-		var btn = event.target;
-		var txt = document.getElementById('txtTotal11');
-		txt.value = Number(txt.value) + Number(event.target.innerHTML);
-
-	}
-    
-    </script>
+</script>
 </head>
 
 <body>
-    <h1>
+	<h1>
 		<Center>Scorer Admin</Center>
 	</h1>
-    <table id="match" align="center">
-        <tr>
-            <td>Match</td>
-            <td>
-                <select>
-                    <option value="abc">T-20</option>
-                    <option value="xyz">xyz</option>
-                    <option value="pqr">pqr</option>
-                </select>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <table id="runs" border=1>
-        <tr>
-            <th id="no">No</th>
-            <th id="batsmen">Batsmen</th>
-            <th></th>
-            <th id="truns">Total Runs</th>
-        </tr>
-        <tr class="dark">
-            <td>1</td>
-            <td>Ajinkya Rahane</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer1(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer1(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer1(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer1(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer1(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer1(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer1(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal1" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="light">
-            <td>2</td>
-            <td>Cheteshwar Pujara</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer2(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer2(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer2(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer2(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer2(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer2(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer2(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal2" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="dark">
-            <td>3</td>
-            <td>MS Dhoni</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer3(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer3(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer3(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer3(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer3(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer3(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer3(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal3" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="light">
-            <td>4</td>
-            <td>Murali Vijay</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer4(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer4(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer4(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer4(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer4(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer4(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer4(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal4" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="dark">
-            <td>5</td>
-            <td>Virat kohli</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer5(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer5(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer5(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer5(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer5(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer5(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer5(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal5" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="light">
-            <td>6</td>
-            <td>Ravindra Jadeja</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer6(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer6(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer6(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer6(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer6(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer6(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer6(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal6" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="dark">
-            <td>7</td>
-            <td>Ravichandran Ashwin</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer7(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer7(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer7(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer7(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer7(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer7(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer7(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal7" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="light">
-            <td>8</td>
-            <td>Lokesh Rahul</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer8(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer8(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer8(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer8(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer8(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer8(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer8(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal8" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="dark">
-            <td>9</td>
-            <td>Rohit Sharma</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer9(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer9(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer9(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer9(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer9(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer9(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer9(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal9" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="light">
-            <td>10</td>
-            <td>Yuvraj Singh</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer10(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer10(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer10(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer10(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer10(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer10(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer10(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal10" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-        <tr class="dark">
-            <td>11</td>
-            <td>Wriddhiman Saha</td>
-            <td>
-     	       <button  id="btn" run="0" onclick="incrPlayer11(event)">0</button>
-     	       <button  id="btn" run="1" onclick="incrPlayer11(event)">1</button>
-				<button id="btn" run="2" onclick="incrPlayer11(event)">2</button>
-				<button  id="btn" run="3" onclick="incrPlayer11(event)">3</button>
-				<button  id="btn" run="4" onclick="incrPlayer11(event)">4</button>
-				<button id="btn" run="5" onclick="incrPlayer11(event)">5</button>
-				<button id="btn" run="6" onclick="incrPlayer11(event)">6</button>
-            </td>
-            <td>
-                <input id="txtTotal11" disabled = "disabled" type="text" value="0"> </inputs>
-            </td>
-        </tr>
-    </table>
+	<br>
+	<table id="runs" border=1>
+		<tr>
+			<th id="no">No</th>
+			<th id="batsmen">Batsmen</th>
+			<th></th>
+			<th id="truns">Total Runs</th>
+		</tr>
+		<!-- 		<tr class="dark"> -->
+		<!-- 			<td>1</td> -->
+		<!-- 			<td>Ajinkya Rahane</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incr(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer1(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer1(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer1(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer1(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer1(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer1(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input disabled="disabled" type="text" value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="light"> -->
+		<!-- 			<td>2</td> -->
+		<!-- 			<td>Cheteshwar Pujara</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer2(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer2(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer2(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer2(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer2(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer2(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer2(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal2" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="dark"> -->
+		<!-- 			<td>3</td> -->
+		<!-- 			<td>MS Dhoni</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer3(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer3(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer3(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer3(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer3(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer3(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer3(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal3" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="light"> -->
+		<!-- 			<td>4</td> -->
+		<!-- 			<td>Murali Vijay</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer4(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer4(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer4(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer4(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer4(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer4(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer4(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal4" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="dark"> -->
+		<!-- 			<td>5</td> -->
+		<!-- 			<td>Virat kohli</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer5(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer5(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer5(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer5(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer5(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer5(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer5(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal5" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="light"> -->
+		<!-- 			<td>6</td> -->
+		<!-- 			<td>Ravindra Jadeja</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer6(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer6(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer6(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer6(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer6(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer6(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer6(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal6" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="dark"> -->
+		<!-- 			<td>7</td> -->
+		<!-- 			<td>Ravichandran Ashwin</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer7(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer7(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer7(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer7(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer7(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer7(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer7(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal7" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="light"> -->
+		<!-- 			<td>8</td> -->
+		<!-- 			<td>Lokesh Rahul</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer8(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer8(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer8(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer8(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer8(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer8(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer8(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal8" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="dark"> -->
+		<!-- 			<td>9</td> -->
+		<!-- 			<td>Rohit Sharma</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer9(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer9(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer9(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer9(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer9(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer9(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer9(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal9" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="light"> -->
+		<!-- 			<td>10</td> -->
+		<!-- 			<td>Yuvraj Singh</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer10(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer10(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer10(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer10(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer10(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer10(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer10(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal10" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+		<!-- 		<tr class="dark"> -->
+		<!-- 			<td>11</td> -->
+		<!-- 			<td>Wriddhiman Saha</td> -->
+		<!-- 			<td> -->
+		<!-- 				<button id="btn" run="0" onclick="incrPlayer11(event)">0</button> -->
+		<!-- 				<button id="btn" run="1" onclick="incrPlayer11(event)">1</button> -->
+		<!-- 				<button id="btn" run="2" onclick="incrPlayer11(event)">2</button> -->
+		<!-- 				<button id="btn" run="3" onclick="incrPlayer11(event)">3</button> -->
+		<!-- 				<button id="btn" run="4" onclick="incrPlayer11(event)">4</button> -->
+		<!-- 				<button id="btn" run="5" onclick="incrPlayer11(event)">5</button> -->
+		<!-- 				<button id="btn" run="6" onclick="incrPlayer11(event)">6</button> -->
+		<!-- 			</td> -->
+		<!-- 			<td><input id="txtTotal11" disabled="disabled" type="text" -->
+		<!-- 				value="0"> </inputs></td> -->
+		<!-- 		</tr> -->
+	</table>
 </body>
 
 </html>
